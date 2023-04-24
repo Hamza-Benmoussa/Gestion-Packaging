@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{adminLayout.html}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/fontawesome/css/all.min.css">
+</head>
+<body>
+    <main class="container my-4" layout:fragment="main-content">
+        <div class="card mt-5 w-50 mx-auto">
+            <div class="card-header bg-dark text-white text-center"><i class="fa-solid fa-filter me-2"></i>AddLines</div>
+            <div class="card-body">
+                <form th:action="@{/admin/line}" th:object="${line}" method="post" class="text-center">
+                    <input type="hidden" class="form-control is-valid" th:if="*{id != null}" th:field="*{id}">
+                    <div class="mb-3">
+                        <label for="line" class="form-label">Line</label>
+                        <input type="text" class="form-control is-valid" id="line" th:field="*{lineV}">
+                        <div class="invalid-feedback">Example invalid select route</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="capacity" class="form-label">Line</label>
+                        <input type="number" min="1" step="1" class="form-control is-valid" id="capacity" th:field="*{capacity}">
+                        <div class="invalid-feedback">Example invalid select route</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

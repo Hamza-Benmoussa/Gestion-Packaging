@@ -34,7 +34,7 @@ public class Package {
     private LocalDateTime dateFin;
     @Column(name = "STATUS")
     private String state;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "FOURNISSEUR_ID", referencedColumnName = "FOURNISSEUR_ID")
     private Supplier supplier;
     @ManyToOne(fetch = FetchType.LAZY)

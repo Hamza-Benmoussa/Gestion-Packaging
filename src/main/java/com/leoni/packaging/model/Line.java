@@ -24,7 +24,9 @@ public class Line {
     @Column(name = "LINE_ID", insertable = false, updatable = false)
     private Long id;
     @Column(name="LINE", length = 50, unique = true, nullable = false)
-    private String line;
+    private String lineV;
+    @Column(name = "CAPACITY")
+    private int capacity;
 
 
     @Column(name = "created_date", nullable = false, updatable = false)

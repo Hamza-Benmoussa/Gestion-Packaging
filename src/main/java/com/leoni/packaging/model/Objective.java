@@ -22,14 +22,10 @@ public class Objective {
     @SequenceGenerator(name = "OBJECTIVE_SEQ", sequenceName = "OBJECTIVE_SEQUENCE", allocationSize = 1)
     @Column(name = "OBJECTIVE_ID", insertable = false, updatable = false)
     private Long id;
-    @Column(name = "SHIFT_OBJECTIVE")
-    private int shiftObjective;
     @Column(name = "CURRENT_OBJECTIVE")
     private int currentObjective;
     @Column(name = "QUANTITE_PRODUITE")
-    private int quantity;
-    @Column(name = "DIFFERENCE")
-    private int difference;
+    private int currentQuantity;
     @Column(name = "DATE_DEBUT")
     private LocalDateTime startDate;
     @Column(name = "DATE_LIMIT")

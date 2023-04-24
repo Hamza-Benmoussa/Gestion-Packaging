@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{adminLayout.html}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/fontawesome/css/all.min.css">
+</head>
+<body>
+<main class="container-fluid my-4" layout:fragment="main-content">
+    <div class="card mt-5 w-50 mx-auto">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <form th:action="@{/admin/lines(search=${search},page=${currentPage},size=${currentSize})}" class="d-flex">
+                <input class="form-control me-2" type="search" id="search" name="search" th:value="${search}" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+            <div class="list-group" id="add-user-tab" role="tablist">
+                <a class="btn btn-sm btn-primary" id="add-user-btn" th:href="@{/admin/lineForm}" role="tab"
+                   aria-controls="add-user-form">
+                    <i class="fa-solid fa-plus"></i> Lines</a>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table align-middle">
+                <thead>
+                <tr> <th>LineName</th>  <th>max capacity</th> </tr>
+                </thead>
+                <tbody>
+                <tr th:each="ln : ${lines}">
+                    <td th:text="${ln.lineV}"></td>
+                    <td th:text="${ln.capacity}"></td>
+                    <td style="width: 20px">
+                        <a th:href="@{'/admin/lineForm/'+${ln.id}}"
+                           class="btn btn-sm btn-warning">update</a>
+                    </td>
+                    <td style="width: 20px">
+                        <form th:action="@{'/admin/deleteLine/'+${ln.id}}" method="post">
+                            <button class="btn btn-sm btn-danger">delete</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination m-0">
+                    <li class="page-item" th:if="${!isFirstPage}">
+                        <a class="page-link" th:href="@{/admin/lines(search=${search},page=${1},size=${currentSize})}">First Page</a>
+                    </li>
+                    <li class="page-item" th:if="${!isFirstPage}">
+                        <a class="page-link" th:href="@{/admin/lines(search=${search},page=${currentPage},size=${currentSize})}"><span aria-hidden="true">&laquo;</span></a>
+                    </li>
+                    <li class="page-item" th:each="v,state : ${totalPagesArr}" th:classappend="${state.index==currentPage}?active:''"
+                        th:if="${state.index==currentPage} or
+                               ${state.index==currentPage+1} or
+                               ${state.index==currentPage -1} or
+                              (${state.first} and ${state.index+2>currentPage}) or
+                              (${state.last} and ${state.index -2<currentPage})">
+                        <a class="page-link" th:href="@{/admin/lines(search=${search},page=${state.count},size=${currentSize})}" th:text="${state.count}"></a>
+                    </li>
+                    <li class="page-item" th:if="${!isLastPage}">
+                        <a class="page-link" th:href="@{/admin/lines(search=${search},page=${currentPage +2},size=${currentSize})}"><span aria-hidden="true">&raquo;</span></a>
+                    </li>
+                    <li class="page-item" th:if="${!isLastPage}">
+                        <a class="page-link" th:href="@{/admin/lines(search=${search},page=${totalPages},size=${currentSize})}">Last Page</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</main>
+</body>
+</html>

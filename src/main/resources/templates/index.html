@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{adminLayout.html}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/fontawesome/css/all.min.css">
+</head>
+<body>
+
+    <main class="container-fluid my-4" layout:fragment="main-content">
+        <div>
+            <div class="row mb-2">
+                <div class="col-12">
+                    <div class="text-center bg-info text-white p-2">
+                        <h3>Production Statistics</h3>
+                        <p class="m-0">azertyuikhgfdfghnbgfdfgnhbvdsdfbnghaertyuytrez</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- Filter -->
+                <div class="col-4">
+                    <div class="card mt-2">
+                        <div class="card-header bg-dark text-white text-center"><i class="fa-solid fa-filter me-2"></i>Filter</div>
+                        <div class="card-body">
+
+                            <form th:action="@{/admin/statistics}" method="get" class="text-center" th:object="${filter}">
+
+                                <div class="mb-3">
+                                    <label for="dateDebut" class="form-label bg-info text-white d-block">Date Debut</label>
+                                    <input type="date" class="form-control" id="dateDebut" th:value="*{dateDebut}">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="dateFin" class="form-label bg-info text-white d-block">Date Fin</label>
+                                    <input type="date" class="form-control" id="dateFin" th:value="*{dateFin}">
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="route" class="form-label bg-info text-white d-block">Route</label>
+                                    <select class="form-select" id="route">
+                                        <option selected>Open this select menu</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+
+                                <div class="bg-info text-white mb-2">Results</div>
+                                <div class="mb-3 form-switch form-check form-check-inline">
+                                    <input type="checkbox" class="form-check-input" id="resultsOK" name="ok" th:checked="*{ok}">
+                                    <label class="form-check-label" for="resultsOK">OK</label>
+                                </div>
+                                <div class="mb-3 form-switch form-check form-check-inline">
+                                    <input type="checkbox" class="form-check-input" id="resultsRework" name="rework" th:checked="*{rework}">
+                                    <label class="form-check-label" for="resultsRework">REWORK</label>
+                                </div>
+
+                                <div class="bg-info text-white mb-2">Steering</div>
+                                <div class="mb-3 form-switch form-check form-check-inline">
+                                    <input type="checkbox" class="form-check-input" id="steeringLL" name="ll" th:checked="*{ll}">
+                                    <label class="form-check-label" for="steeringLL">LL</label>
+                                </div>
+                                <div class="mb-3 form-switch form-check form-check-inline">
+                                    <input type="checkbox" class="form-check-input" id="steeringRL" name="rl" th:checked="*{rl}">
+                                    <label class="form-check-label" for="steeringRL">RL</label>
+                                </div>
+
+                                <div class="bg-info text-white mb-2">Types</div>
+                                <div class="mb-3 form-switch form-check form-check-inline">
+                                    <input type="checkbox" class="form-check-input" id="typeOV" name="ov" th:checked="*{ov}">
+                                    <label class="form-check-label" for="typeOV">OV</label>
+                                </div>
+                                <div class="mb-3 form-switch form-check form-check-inline">
+                                    <input type="checkbox" class="form-check-input" id="typeOV5" name="ov5" th:checked="*{ov5}">
+                                    <label class="form-check-label" for="typeOV5">OV5</label>
+                                </div>
+                                <div class="mb-3 form-switch form-check form-check-inline">
+                                    <input type="checkbox" class="form-check-input" id="typeOV51" name="ov51" th:checked="*{ov51}">
+                                    <label class="form-check-label" for="typeOV51">OV51</label>
+                                </div>
+                                <div class="mb-3 form-switch form-check form-check-inline">
+                                    <input type="checkbox" class="form-check-input" id="typeOV52" name="ov52" th:checked="*{ov52}">
+                                    <label class="form-check-label" for="typeOV52">OV52</label>
+                                </div>
+
+
+
+                                <button type="submit" class="btn btn-primary">Search</button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- packages -->
+                <div class="col-8 d-flex justify-content-center flex-wrap">
+                    <div class="card m-2" style="width: 250px;">
+                        <div class="card-header bg-dark">
+                            <span class="badge bg-secondary me-3 bg-info" data-bs-toggle="modal" data-bs-target="#exampleModal">300</span><span class="badge bg-secondary">Featured</span>
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">LineName</th>
+                                    <th scope="col">count</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>PIC</td>
+                                    <td class="text-center">85</td>
+                                </tr>
+                                <tr>
+                                    <td>MO</td>
+                                    <td class="text-center">105</td>
+                                </tr>
+                                <tr>
+                                    <td>PAC</td>
+                                    <td class="text-center">111</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- statistics -->
+        <div class="modal" id="exampleModal" tabindex="-1">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content rounded-0">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Modal body text goes here.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

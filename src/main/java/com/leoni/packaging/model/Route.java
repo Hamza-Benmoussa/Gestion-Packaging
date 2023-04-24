@@ -23,7 +23,7 @@ public class Route {
     @Column(name = "ROUTE_ID", insertable = false, updatable = false)
     private Long id;
     @Column(name = "ROUTE",length = 50, unique = true, nullable = false)
-    private String route;
+    private String routeV;
 
 
     @Column(name = "created_date", nullable = false, updatable = false)

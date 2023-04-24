@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{adminLayout.html}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/fontawesome/css/all.min.css">
+</head>
+<body>
+<main class="container-fluid my-4" layout:fragment="main-content">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+            <div class="list-group" id="add-user-tab" role="tablist">
+                <a class="btn btn-sm btn-primary" id="add-user-btn" th:href="@{/admin/add-objective}" role="tab"
+                   aria-controls="add-user-form">
+                    <i class="fa-solid fa-plus"></i> Objectives</a>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table align-middle">
+                <thead>
+                <tr>
+                    <th>ObjectivesAct</th>
+                    <th>QteProduit</th>
+                    <th>Difference</th>
+                    <th>Rework</th>
+                    <th>ObjectivesShift</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>50</td>
+                    <td>0</td>
+                    <td>-50</td>
+                    <td>0</td>
+                    <td>150</td>
+                    <td style="width: 30px;">
+                        <a class="btn btn-sm btn-warning">update</a>
+                    </td>
+                    <td style="width: 30px;">
+                        <a class="btn btn-sm btn-danger">delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+</body>
+
+</html>

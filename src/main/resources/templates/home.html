@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css"
+          integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <style>
+        .bg-info {
+            background-color: rgb(46, 46, 243) !important;
+        }
+
+        .text-info {
+            color: rgb(46, 46, 243) !important;
+            font-size: 45px;
+            margin-right: 100px;
+        }
+
+        a.nav-link:hover, a.nav-link:active {
+            color: rgb(46, 46, 243) !important;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="leoni-logo.png" alt="leoni logo" style="width: 100px;">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">
+                        <i class="fa-solid fa-chart-line fa-beat-fade"></i> <span class="fa-beat-fade">Statistics</span>
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        <i class="fa-solid fa-gears"></i> <span class="">Settings</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid mt-4">
+    <div class="row">
+        <!-- Filter -->
+        <div class="col-4">
+            <div class="card mt-2">
+                <div class="card-header bg-dark text-white text-center"><i class="fa-solid fa-filter me-2"></i>Filter
+                </div>
+                <div class="card-body">
+
+                    <form class="text-center">
+
+                        <div class="mb-3">
+                            <label for="dateDebut" class="form-label bg-info text-white d-block">Date Debut</label>
+                            <input type="date" class="form-control" id="dateDebut">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="dateFin" class="form-label bg-info text-white d-block">Date Fin</label>
+                            <input type="date" class="form-control" id="dateFin">
+                        </div>
+
+                        <div class="bg-info text-white mb-2">Results</div>
+                        <div class="mb-3 form-switch form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" id="resultsOK">
+                            <label class="form-check-label" for="resultsOK">OK</label>
+                        </div>
+                        <div class="mb-3 form-switch form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" id="resultsRework">
+                            <label class="form-check-label" for="resultsRework">REWORK</label>
+                        </div>
+
+                        <div class="bg-info text-white mb-2">Steering</div>
+                        <div class="mb-3 form-switch form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" id="steeringLL">
+                            <label class="form-check-label" for="steeringLL">LL</label>
+                        </div>
+                        <div class="mb-3 form-switch form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" id="steeringRL">
+                            <label class="form-check-label" for="steeringRL">RL</label>
+                        </div>
+
+                        <div class="bg-info text-white mb-2">Types</div>
+                        <div class="mb-3 form-switch form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" id="typeOV">
+                            <label class="form-check-label" for="typeOV">OV</label>
+                        </div>
+                        <div class="mb-3 form-switch form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" id="typeOV5">
+                            <label class="form-check-label" for="typeOV5">OV5</label>
+                        </div>
+                        <div class="mb-3 form-switch form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" id="typeOV51">
+                            <label class="form-check-label" for="typeOV51">OV51</label>
+                        </div>
+                        <div class="mb-3 form-switch form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" id="typeOV52">
+                            <label class="form-check-label" for="typeOV52">OV52</label>
+                        </div>
+
+
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <!-- packages -->
+        <div class="col-8 d-flex justify-content-center flex-wrap">
+            <div class="card m-2" style="width: 250px;">
+                <div class="card-header bg-dark">
+            <span class="badge bg-secondary me-3 bg-info" data-bs-toggle="modal"
+                  data-bs-target="#exampleModal">300</span><span class="badge bg-secondary">Featured</span>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">LineName</th>
+                            <th scope="col">count</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>PIC</td>
+                            <td class="text-center">85</td>
+                        </tr>
+                        <tr>
+                            <td>MO</td>
+                            <td class="text-center">105</td>
+                        </tr>
+                        <tr>
+                            <td>PAC</td>
+                            <td class="text-center">111</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card m-2" style="width: 250px;">
+                <div class="card-header bg-dark">
+            <span class="badge bg-secondary me-3 bg-info" data-bs-toggle="modal"
+                  data-bs-target="#exampleModal">300</span><span class="badge bg-secondary">Featured</span>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">LineName</th>
+                            <th scope="col">count</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>PIC</td>
+                            <td class="text-center">85</td>
+                        </tr>
+                        <tr>
+                            <td>MO</td>
+                            <td class="text-center">105</td>
+                        </tr>
+                        <tr>
+                            <td>PAC</td>
+                            <td class="text-center">111</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card m-2" style="width: 250px;">
+                <div class="card-header bg-dark">
+            <span class="badge bg-secondary me-3 bg-info" data-bs-toggle="modal"
+                  data-bs-target="#exampleModal">300</span><span class="badge bg-secondary">Featured</span>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">LineName</th>
+                            <th scope="col">count</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>PIC</td>
+                            <td class="text-center">85</td>
+                        </tr>
+                        <tr>
+                            <td>MO</td>
+                            <td class="text-center">105</td>
+                        </tr>
+                        <tr>
+                            <td>PAC</td>
+                            <td class="text-center">111</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card m-2" style="width: 250px;">
+                <div class="card-header bg-dark">
+            <span class="badge bg-secondary me-3 bg-info" data-bs-toggle="modal"
+                  data-bs-target="#exampleModal">300</span><span class="badge bg-secondary">Featured</span>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">LineName</th>
+                            <th scope="col">count</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>PIC</td>
+                            <td class="text-center">85</td>
+                        </tr>
+                        <tr>
+                            <td>MO</td>
+                            <td class="text-center">105</td>
+                        </tr>
+                        <tr>
+                            <td>PAC</td>
+                            <td class="text-center">111</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card m-2" style="width: 250px;">
+                <div class="card-header bg-dark">
+            <span class="badge bg-secondary me-3 bg-info" data-bs-toggle="modal"
+                  data-bs-target="#exampleModal">300</span><span class="badge bg-secondary">Featured</span>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">LineName</th>
+                            <th scope="col">count</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>PIC</td>
+                            <td class="text-center">85</td>
+                        </tr>
+                        <tr>
+                            <td>MO</td>
+                            <td class="text-center">105</td>
+                        </tr>
+                        <tr>
+                            <td>PAC</td>
+                            <td class="text-center">111</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card m-2" style="width: 250px;">
+                <div class="card-header bg-dark">
+            <span class="badge bg-secondary me-3 bg-info" data-bs-toggle="modal"
+                  data-bs-target="#exampleModal">300</span><span class="badge bg-secondary">Featured</span>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">LineName</th>
+                            <th scope="col">count</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>PIC</td>
+                            <td class="text-center">85</td>
+                        </tr>
+                        <tr>
+                            <td>MO</td>
+                            <td class="text-center">105</td>
+                        </tr>
+                        <tr>
+                            <td>PAC</td>
+                            <td class="text-center">111</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- statistics -->
+<div class="modal" id="exampleModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content rounded-0">
+            <div class="modal-header">
+                <h5 class="modal-title">Statistics</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table caption-top">
+                    <caption>List of Statistic</caption>
+                    <button type="button" class="btn btn-dark">CSV</button>
+                    <button type="button" class=" ms-3 btn btn-dark">Excel</button>
+                    <thead>
+                    <tr>
+                        <th scope="col">OrderScanCode</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Steering</th>
+                        <th scope="col">LineName</th>
+                        <th scope="col">OperationName</th>
+                        <th scope="col">ResultName</th>
+                        <th scope="col">DeliveryDate</th>
+                        <th scope="col">Started</th>
+                        <th scope="col">Completed</th>
+                        <th scope="col">Duration</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+
+                        <td>4556555540MA</td>
+                        <td>OV51</td>
+                        <td>LL</td>
+                        <td>WSMA02</td>
+                        <td>WSV</td>
+                        <td>OK</td>
+                        <td>2023-07-15</td>
+                        <td>2023-07-16
+                            07:08:15
+                        </td>
+                        <td>2023-07-16
+                            07:09:15
+                        </td>
+                        <td>1</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.bundle.min.js"
+        integrity="sha512-i9cEfJwUwViEPFKdC1enz4ZRGBj8YQo6QByFTF92YXHi7waCqyexvRD75S5NVTsSiTv7rKWqG9Y5eFxmRsOn0A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</body>
+
+</html>
