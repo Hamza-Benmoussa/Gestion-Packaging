@@ -14,16 +14,15 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "GROUPS")
+@Table(name = "groups")
 @EntityListeners(AuditingEntityListener.class)
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class Group {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "GROUP_SEQ")
-    @SequenceGenerator(name = "GROUP_SEQ", sequenceName = "GROUP_SEQUENCE", allocationSize = 1)
-    @Column(name = "GROUP_ID", insertable = false, updatable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "group_id", insertable = false, updatable = false)
     private Long id;
-    @Column(name = "GROUP_NAME", length = 100)
+    @Column(name = "group_name", length = 100)
     private String name;
 
     @Column(name = "created_date", nullable = false, updatable = false)

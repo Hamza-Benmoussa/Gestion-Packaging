@@ -10,76 +10,36 @@
     <link rel="stylesheet" href="../static/fontawesome/css/all.min.css">
 </head>
 <body>
-<main class="container-fluid my-4" layout:fragment="main-content">
-    <div class="container-fluid mt-4">
-        <div class="row">
-            <!-- Filter -->
-            <div class="col-4">
-                <div class="card mt-2">
-                    <div class="card-header bg-dark text-white text-center"><i class="fa-solid fa-filter me-2"></i>AddUsers
-                    </div>
-                    <div class="card-body">
-
-                        <form class=" was-validated text-center">
-                            <div class="mb-3">
-                                <label for="validationText" class="form-label">Name</label>
-                                <input type="text" class="form-control is-invalid" id="validationText"
-                                       placeholder="Name" required></input>
-
-                            </div>
-                            <div class="mb-3">
-                                <label for="validationEmail" class="form-label">Email</label>
-                                <input type="email" class="form-control is-invalid" id="validationEmail"
-                                       placeholder="Login" required></input>
-                            </div>
-                            <div class="mb-3">
-                                <label for="validationPassword" class="form-label">Password</label>
-                                <input type="password" class="form-control is-invalid" id="validationPassword"
-                                       placeholder="Name" required></input>
-                            </div>
-                            <div class="mb-3">
-                                <label for="validationText" class="form-label">Routes</label>
-                                <select class="form-select" required aria-label="select example">
-                                    <option value="">routes</option>
-                                    <option value="1">Main</option>
-                                    <option value="2">Body</option>
-                                    <option value="3">DL</option>
-                                    <option value="4">DD</option>
-                                </select>
-                                <div class="invalid-feedback">Example invalid select route</div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="validationText" class="form-label">Lines</label>
-                                <select class="form-select" required aria-label="select example">
-                                    <option value="">lines</option>
-                                    <option value="1">01</option>
-                                    <option value="2">02</option>
-                                    <option value="3">03</option>
-                                </select>
-                                <div class="invalid-feedback">Example invalid select route</div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="validationText" class="form-label">Groups</label>
-                                <select class="form-select" required aria-label="select example">
-                                    <option value="">groups</option>
-                                    <option value="1">G1</option>
-                                    <option value="2">G2</option>
-                                    <option value="3">G3</option>
-                                </select>
-                                <div class="invalid-feedback">Example invalid select groups</div>
-                            </div>
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                            </div>
-
-
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
-
-                    </div>
+<main class="container my-4" layout:fragment="main-content">
+    <div class="card mt-5 w-50 mx-auto">
+        <div class="card-header bg-dark text-white text-center"><i class="fa-solid fa-filter me-2"></i>AddUser</div>
+        <div class="card-body">
+            <form th:action="@{/admin/user}" th:object="${user}" method="post" class="text-center">
+                <input type="hidden" class="form-control is-valid" th:if="*{id != null}" th:field="*{id}">
+                <div class="mb-3">
+                    <label for="userName" class="form-label">Name</label>
+                    <input type="text" class="form-control is-valid" id="userName" th:field="*{name}">
+                    <div class="invalid-feedback">Example invalid select user</div>
                 </div>
-            </div>
+                <div class="mb-3">
+                    <label for="userLogin" class="form-label">Login</label>
+                    <input type="text" class="form-control is-valid" id="userLogin" th:field="*{login}">
+                    <div class="invalid-feedback">Example invalid select user</div>
+                </div>
+                <div class="mb-3">
+                    <label for="userRole" class="form-label">Group</label>
+                    <select class="form-select" id="userRole" th:field="*{group}">
+                        <option th:each="group : ${groups}" th:value="${group.id}" th:text="${group.name}">
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="userGroup" class="form-label">Role</label>
+                    <select class="form-select" id="userGroup" th:field="*{role}">
+                        <option th:each="role : ${roles}" th:value="${role}" th:text="${role}">
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
         </div>
     </div>
 </main>

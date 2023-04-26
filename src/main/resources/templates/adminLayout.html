@@ -8,9 +8,8 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css"
-          th:href="@{/bootstrap/css/bootstrap.min.css}">
-    <link rel="stylesheet" href="../static/fontawesome/css/all.min.css" th:href="@{/fontawesome/css/all.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/font-awesome/6.4.0/css/all.min.css}">
     <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
 </head>
 <body>
@@ -18,6 +17,6 @@
 
 <main layout:fragment="main-content"></main>
 
-<script src="../static/bootstrap/js/bootstrap.bundle.js" th:src="@{/bootstrap/js/bootstrap.bundle.js}"></script>
+<script th:src="@{/webjars/bootstrap/5.1.3/js/bootstrap.bundle.js}"></script>
 </body>
 </html>

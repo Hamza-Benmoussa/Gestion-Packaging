@@ -14,15 +14,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "ROUTES")
+@Table(name = "routes")
 @EntityListeners(AuditingEntityListener.class)
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class Route {
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ROUTE_SEQ")
-    @SequenceGenerator(name = "ROUTE_SEQ", sequenceName = "ROUTE_SEQUENCE", allocationSize = 1)
-    @Column(name = "ROUTE_ID", insertable = false, updatable = false)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "route_id", insertable = false, updatable = false)
     private Long id;
-    @Column(name = "ROUTE",length = 50, unique = true, nullable = false)
+    @Column(name = "route",length = 50, unique = true, nullable = false)
     private String routeV;
 
 

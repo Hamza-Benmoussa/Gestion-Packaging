@@ -1,5 +1,6 @@
 package com.leoni.packaging.enums;
 
+
 public enum Role {
     ADMIN("ADMIN"),
     USER("USER");
@@ -10,7 +11,8 @@ public enum Role {
         this.role = role;
     }
 
-    public String getSize() {
+    public String getRole() {
         return role;
     }
+
 }

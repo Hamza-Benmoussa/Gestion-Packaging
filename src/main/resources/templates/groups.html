@@ -11,36 +11,32 @@
 </head>
 <body>
 <main class="container-fluid my-4" layout:fragment="main-content">
-    <div class="card mt-5 w-75 mx-auto">
+    <div class="card mt-5 w-50 mx-auto">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <form th:action="@{/admin/users(search=${search},page=${currentPage},size=${currentSize})}" class="d-flex">
+            <form th:action="@{/admin/groups(search=${search},page=${currentPage},size=${currentSize})}" class="d-flex">
                 <input class="form-control me-2" type="search" id="search" name="search" th:value="${search}" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
             <div class="list-group" id="add-user-tab" role="tablist">
-                <a class="btn btn-sm btn-primary" id="add-user-btn" th:href="@{/admin/userForm}" role="tab"
+                <a class="btn btn-sm btn-primary" id="add-user-btn" th:href="@{/admin/groupForm}" role="tab"
                    aria-controls="add-user-form">
-                    <i class="fa-solid fa-plus"></i> Users</a>
+                    <i class="fa-solid fa-plus"></i> groups</a>
             </div>
         </div>
         <div class="card-body">
             <table class="table align-middle">
                 <thead>
-                <tr> <th>Name</th> <th>Login</th> <th>Role</th> <th>Group</th> <th>Status</th> </tr>
+                <tr> <th>groupName</th> </tr>
                 </thead>
                 <tbody>
-                <tr th:each="user : ${users}">
-                    <td th:text="${user.name}"></td>
-                    <td th:text="${user.login}"></td>
-                    <td th:text="${user.role}"></td>
-                    <td th:text="${user.group.name}"></td>
-                    <td th:text="${user.status}"></td>
+                <tr th:each="group : ${groups}">
+                    <td th:text="${group.name}"></td>
                     <td style="width: 20px">
-                        <a th:href="@{'/admin/userForm/'+${user.id}}"
+                        <a th:href="@{'/admin/groupForm/'+${group.id}}"
                            class="btn btn-sm btn-warning">update</a>
                     </td>
                     <td style="width: 20px">
-                        <form th:action="@{'/admin/deleteUser/'+${user.id}}" method="post">
+                        <form th:action="@{'/admin/deleteGroup/'+${group.id}}" method="post">
                             <button class="btn btn-sm btn-danger">delete</button>
                         </form>
                     </td>
@@ -52,10 +48,10 @@
             <nav aria-label="Page navigation example">
                 <ul class="pagination m-0">
                     <li class="page-item" th:if="${!isFirstPage}">
-                        <a class="page-link" th:href="@{/admin/users(search=${search},page=${1},size=${currentSize})}">First Page</a>
+                        <a class="page-link" th:href="@{/admin/groups(search=${search},page=${1},size=${currentSize})}">First Page</a>
                     </li>
                     <li class="page-item" th:if="${!isFirstPage}">
-                        <a class="page-link" th:href="@{/admin/users(search=${search},page=${currentPage},size=${currentSize})}"><span aria-hidden="true">&laquo;</span></a>
+                        <a class="page-link" th:href="@{/admin/groups(search=${search},page=${currentPage},size=${currentSize})}"><span aria-hidden="true">&laquo;</span></a>
                     </li>
                     <li class="page-item" th:each="v,state : ${totalPagesArr}" th:classappend="${state.index==currentPage}?active:''"
                         th:if="${state.index==currentPage} or
@@ -63,13 +59,13 @@
                                ${state.index==currentPage -1} or
                               (${state.first} and ${state.index+2>currentPage}) or
                               (${state.last} and ${state.index -2<currentPage})">
-                        <a class="page-link" th:href="@{/admin/users(search=${search},page=${state.count},size=${currentSize})}" th:text="${state.count}"></a>
+                        <a class="page-link" th:href="@{/admin/groups(search=${search},page=${state.count},size=${currentSize})}" th:text="${state.count}"></a>
                     </li>
                     <li class="page-item" th:if="${!isLastPage}">
-                        <a class="page-link" th:href="@{/admin/users(search=${search},page=${currentPage +2},size=${currentSize})}"><span aria-hidden="true">&raquo;</span></a>
+                        <a class="page-link" th:href="@{/admin/groups(search=${search},page=${currentPage +2},size=${currentSize})}"><span aria-hidden="true">&raquo;</span></a>
                     </li>
                     <li class="page-item" th:if="${!isLastPage}">
-                        <a class="page-link" th:href="@{/admin/users(search=${search},page=${totalPages},size=${currentSize})}">Last Page</a>
+                        <a class="page-link" th:href="@{/admin/groups(search=${search},page=${totalPages},size=${currentSize})}">Last Page</a>
                     </li>
                 </ul>
             </nav>

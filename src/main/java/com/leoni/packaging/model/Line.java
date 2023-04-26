@@ -14,18 +14,17 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name="Lines")
+@Table(name="lines")
 @EntityListeners(AuditingEntityListener.class)
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class Line {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "LINE_SEQ")
-    @SequenceGenerator(name = "LINE_SEQ", sequenceName = "LINE_SEQUENCE", allocationSize = 1)
-    @Column(name = "LINE_ID", insertable = false, updatable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "line_id", insertable = false, updatable = false)
     private Long id;
-    @Column(name="LINE", length = 50, unique = true, nullable = false)
+    @Column(name="line", length = 50, unique = true, nullable = false)
     private String lineV;
-    @Column(name = "CAPACITY")
+    @Column(name = "capacity")
     private int capacity;
 
 

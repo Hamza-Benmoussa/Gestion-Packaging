@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{adminLayout.html}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/fontawesome/css/all.min.css">
+</head>
+<body>
+<main class="container my-4" layout:fragment="main-content">
+    <div class="card mt-5 w-50 mx-auto">
+        <div class="card-header bg-dark text-white text-center"><i class="fa-solid fa-filter me-2"></i>Login</div>
+        <div class="card-body">
+
+            <form th:action="@{/login}" method="post" class=" was-validated text-center">
+
+                <div class="mb-3">
+                    <label for="username" class="form-label">Login</label>
+                    <input type="text" class="form-control is-invalid" id="username" name="username" placeholder="username" required />
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control is-invalid" id="password" name="password" placeholder="Password" required />
+                </div>
+
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+
+        </div>
+    </div>
+</main>
+</body>
+</html>

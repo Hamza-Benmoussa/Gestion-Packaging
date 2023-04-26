@@ -14,36 +14,35 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "CABLES")
+@Table(name = "cables")
 @EntityListeners(AuditingEntityListener.class)
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class Cable {
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CABLE_SEQ")
-    @SequenceGenerator(name = "CABLE_SEQ", sequenceName = "CABLE_SEQUENCE", allocationSize = 1)
-    @Column(name = "CABLE_ID", insertable = false, updatable = false)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cable_id", insertable = false, updatable = false)
     private Long id;
-    @Column(name="CABLE_CODE_BAR", length = 100, nullable = false, unique = true)
+    @Column(name="cable_code_bar", length = 100, nullable = false, unique = true)
     private String barCode;
-    @Column(name="CABLE_TYPE")
+    @Column(name="cable_type")
     private String type;
-    @Column(name="STEERING")
+    @Column(name="steering")
     private String steering;
-    @Column(name="RESULT")
+    @Column(name="result")
     private String result;
-    @Column(name="SCAN_STARTED")
+    @Column(name="scan_started")
     private LocalDateTime started;
-    @Column(name="SCAN_COMPLETED")
+    @Column(name="scan_completed")
     private LocalDateTime completed;
-    @Column(name="SCAN_DURATION")
+    @Column(name="scan_duration")
     private int duration;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PACKAGE_ID", referencedColumnName = "PACKAGE_ID")
+    @JoinColumn(name = "package_id", referencedColumnName = "package_id")
     private Package aPackage;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "LINE_ID", referencedColumnName = "LINE_ID")
+    @JoinColumn(name = "line_id", referencedColumnName = "line_id")
     private Line line;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ROUTE_ID", referencedColumnName = "ROUTE_ID")
+    @JoinColumn(name = "route_id", referencedColumnName = "route_id")
     private Route route;
 
     @Column(name = "created_date", nullable = false, updatable = false)

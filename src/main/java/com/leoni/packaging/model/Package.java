@@ -14,34 +14,33 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "PACKAGES")
+@Table(name = "packages")
 @EntityListeners(AuditingEntityListener.class)
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class Package {
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PACKAGE_SEQ")
-    @SequenceGenerator(name = "PACKAGE_SEQ", sequenceName = "PACKAGE_SEQUENCE", allocationSize = 1)
-    @Column(name = "PACKAGE_ID", insertable = false, updatable = false)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "package_id", insertable = false, updatable = false)
     private Long id;
-    @Column(name = "ETICKET", length = 100, nullable = false)
+    @Column(name = "eticket", length = 100, nullable = false)
     private String barCode;
-    @Column(name = "QUANTITE_TOTAL")
+    @Column(name = "quantite_total")
     private int totalQuantity;
-    @Column(name = "QUANTITE_COURANT")
+    @Column(name = "quantite_courant")
     private int currentQuatity;
-    @Column(name = "DATE_DEBUT")
+    @Column(name = "date_debut")
     private LocalDateTime dateDebut;
-    @Column(name = "DATE_FIN")
+    @Column(name = "date_fin")
     private LocalDateTime dateFin;
-    @Column(name = "STATUS")
+    @Column(name = "status")
     private String state;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "FOURNISSEUR_ID", referencedColumnName = "FOURNISSEUR_ID")
+    @JoinColumn(name = "fournisseur_id", referencedColumnName = "fournisseur_id")
     private Supplier supplier;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ROUTE_ID", referencedColumnName = "ROUTE_ID")
+    @JoinColumn(name = "route_id", referencedColumnName = "route_id")
     private Route route;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "LINE_ID", referencedColumnName = "LINE_ID")
+    @JoinColumn(name = "line_id", referencedColumnName = "line_id")
     private Line line;
 
 

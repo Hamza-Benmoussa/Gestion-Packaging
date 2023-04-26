@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -33,25 +34,30 @@
                             <li><a class="dropdown-item" th:href="@{/admin/users}">Users</a></li>
                             <li><a class="dropdown-item" th:href="@{/admin/objectives}">Objectives</a></li>
                             <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" th:href="@{/admin/groups}">Group</a></li>
                             <li><a class="dropdown-item" th:href="@{/admin/routes}">Route</a></li>
                             <li><a class="dropdown-item" th:href="@{/admin/lines}">Line</a></li>
                         </ul>
                     </li>
                 </ul>
                 <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" sec:authorize="!isAuthenticated()" th:href="@{/login}">Login</a>
+                    </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                           sec:authorize="isAuthenticated()" sec:authentication="name"
+                        >
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <li><a class="dropdown-item" href="javascript: document.logoutForm.submit()">Logout</a></li>
                         </ul>
                     </li>
                 </ul>
             </div>
+            <form th:action="@{/logout}" method="post" th:hidden="true" name="logoutForm">
+                <input type="submit" value="Logout" />
+            </form>
         </div>
     </nav>
 </body>

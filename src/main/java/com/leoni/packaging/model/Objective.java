@@ -14,27 +14,26 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "OBJECTIVES")
+@Table(name = "objectives")
 @EntityListeners(AuditingEntityListener.class)
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class Objective {
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OBJECTIVE_SEQ")
-    @SequenceGenerator(name = "OBJECTIVE_SEQ", sequenceName = "OBJECTIVE_SEQUENCE", allocationSize = 1)
-    @Column(name = "OBJECTIVE_ID", insertable = false, updatable = false)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "objective_id", insertable = false, updatable = false)
     private Long id;
-    @Column(name = "CURRENT_OBJECTIVE")
+    @Column(name = "current_objective")
     private int currentObjective;
-    @Column(name = "QUANTITE_PRODUITE")
+    @Column(name = "quantite_produite")
     private int currentQuantity;
-    @Column(name = "DATE_DEBUT")
+    @Column(name = "date_debut")
     private LocalDateTime startDate;
-    @Column(name = "DATE_LIMIT")
+    @Column(name = "date_limit")
     private LocalDateTime endDate;
     @ManyToOne
-    @JoinColumn(name = "LINE_ID", referencedColumnName = "LINE_ID")
+    @JoinColumn(name = "line_id", referencedColumnName = "line_id")
     private Line line;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name= "GROUP_ID", referencedColumnName = "GROUP_ID")
+    @JoinColumn(name= "group_id", referencedColumnName = "group_id")
     private Group group;
 
 

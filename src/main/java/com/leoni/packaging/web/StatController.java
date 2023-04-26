@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/admin")
 @Slf4j
-public class MainController {
+public class StatController {
 
     @GetMapping(path = "statistics")
     public String index(Model model, StatisticsFilter filter){

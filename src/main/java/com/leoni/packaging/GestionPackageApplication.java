@@ -2,13 +2,13 @@ package com.leoni.packaging;
 
 import com.leoni.packaging.dao.CableRepository;
 import com.leoni.packaging.dao.PackageRepository;
-import com.leoni.packaging.dao.SupplierRepository;
-import com.leoni.packaging.dao.UserRepository;
 import com.leoni.packaging.enums.Role;
 import com.leoni.packaging.model.*;
 import com.leoni.packaging.model.Package;
+import com.leoni.packaging.service.GroupService;
 import com.leoni.packaging.service.LineService;
 import com.leoni.packaging.service.RouteService;
+import com.leoni.packaging.service.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,12 +17,10 @@ import org.springframework.context.annotation.Bean;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
-import java.util.stream.Stream;
 
 @SpringBootApplication
 public class GestionPackageApplication {
@@ -34,9 +32,15 @@ public class GestionPackageApplication {
 	@Bean @Transactional
 	CommandLineRunner runner(RouteService routeService,
 							 LineService lineService,
+							 GroupService groupService,
+							 UserService userService,
 							 PackageRepository packageRepository,
 							 CableRepository cableRepository){
 		return args -> {
+
+			Group group1 = groupService.addGroup(Group.builder().name("group1").build());
+			Group group2 = groupService.addGroup(Group.builder().name("group2").build());
+			Group group3 = groupService.addGroup(Group.builder().name("group3").build());
 
 			Route route1 = routeService.addRoute(Route.builder().routeV("route1").build());
 			Route route2 = routeService.addRoute(Route.builder().routeV("route2").build());
@@ -45,6 +49,19 @@ public class GestionPackageApplication {
 			Line line1 = lineService.addLine(Line.builder().lineV("line1").capacity(150).build());
 			Line line2 = lineService.addLine(Line.builder().lineV("line2").capacity(150).build());
 			Line line3 = lineService.addLine(Line.builder().lineV("line3").capacity(150).build());
+
+			AppUser anas = userService.addUser(AppUser.builder()
+					.name("anas")
+					.login("ekko")
+					.group(group1)
+					.role(Role.ADMIN)
+					.build());
+			AppUser hamza = userService.addUser(AppUser.builder()
+					.name("hamza")
+					.login("hamza")
+					.group(group2)
+					.role(Role.USER)
+					.build());
 
 			for(int i=0;i<100;i++){
 				Package aPackage = Package.builder()
@@ -82,4 +99,5 @@ public class GestionPackageApplication {
 			});
 		};
 	}
+
 }
