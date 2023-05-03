@@ -21,14 +21,8 @@ public class Cable {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cable_id", insertable = false, updatable = false)
     private Long id;
-    @Column(name="cable_code_bar", length = 100, nullable = false, unique = true)
+    @Column(name="cable_code_bar", length = 100, unique = true)
     private String barCode;
-    @Column(name="cable_type")
-    private String type;
-    @Column(name="steering")
-    private String steering;
-    @Column(name="result")
-    private String result;
     @Column(name="scan_started")
     private LocalDateTime started;
     @Column(name="scan_completed")
@@ -41,9 +35,6 @@ public class Cable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "line_id", referencedColumnName = "line_id")
     private Line line;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "route_id", referencedColumnName = "route_id")
-    private Route route;
 
     @Column(name = "created_date", nullable = false, updatable = false)
     @CreatedDate

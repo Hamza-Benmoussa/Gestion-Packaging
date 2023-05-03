@@ -13,14 +13,14 @@
 
     <main class="container-fluid my-4" layout:fragment="main-content">
         <div>
-            <div class="row mb-2">
+            <!--<div class="row mb-2">
                 <div class="col-12">
                     <div class="text-center bg-info text-white p-2">
                         <h3>Production Statistics</h3>
                         <p class="m-0">azertyuikhgfdfghnbgfdfgnhbvdsdfbnghaertyuytrez</p>
                     </div>
                 </div>
-            </div>
+            </div>-->
             <div class="row">
                 <!-- Filter -->
                 <div class="col-4">
@@ -48,16 +48,6 @@
                                         <option value="2">Two</option>
                                         <option value="3">Three</option>
                                     </select>
-                                </div>
-
-                                <div class="bg-info text-white mb-2">Results</div>
-                                <div class="mb-3 form-switch form-check form-check-inline">
-                                    <input type="checkbox" class="form-check-input" id="resultsOK" name="ok" th:checked="*{ok}">
-                                    <label class="form-check-label" for="resultsOK">OK</label>
-                                </div>
-                                <div class="mb-3 form-switch form-check form-check-inline">
-                                    <input type="checkbox" class="form-check-input" id="resultsRework" name="rework" th:checked="*{rework}">
-                                    <label class="form-check-label" for="resultsRework">REWORK</label>
                                 </div>
 
                                 <div class="bg-info text-white mb-2">Steering</div>
@@ -98,9 +88,11 @@
                 </div>
                 <!-- packages -->
                 <div class="col-8 d-flex justify-content-center flex-wrap">
-                    <div class="card m-2" style="width: 250px;">
-                        <div class="card-header bg-dark">
-                            <span class="badge bg-secondary me-3 bg-info" data-bs-toggle="modal" data-bs-target="#exampleModal">300</span><span class="badge bg-secondary">Featured</span>
+                    <div class="card m-2" style="width: 250px;"
+                         th:each="package : ${packages}">
+                        <div class="card-header bg-dark d-flex justify-content-between">
+                            <span class="badge bg-secondary bg-info" data-bs-toggle="modal" data-bs-target="#exampleModal">300</span>
+                            <span class="badge bg-secondary" th:text="${package.APackage.packageName}"></span>
                         </div>
                         <div class="card-body">
                             <table class="table">
@@ -111,17 +103,9 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>PIC</td>
-                                    <td class="text-center">85</td>
-                                </tr>
-                                <tr>
-                                    <td>MO</td>
-                                    <td class="text-center">105</td>
-                                </tr>
-                                <tr>
-                                    <td>PAC</td>
-                                    <td class="text-center">111</td>
+                                <tr th:each="line : ${package.lines}">
+                                    <td th:text="${line.lineName}">PIC</td>
+                                    <td class="text-center" th:text="${line.cables}">85</td>
                                 </tr>
                                 </tbody>
                             </table>

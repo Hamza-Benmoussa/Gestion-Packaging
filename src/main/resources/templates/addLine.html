@@ -17,14 +17,32 @@
                 <form th:action="@{/admin/line}" th:object="${line}" method="post" class="text-center">
                     <input type="hidden" class="form-control is-valid" th:if="*{id != null}" th:field="*{id}">
                     <div class="mb-3">
-                        <label for="line" class="form-label">Line</label>
-                        <input type="text" class="form-control is-valid" id="line" th:field="*{lineV}">
+                        <label for="line" class="form-label">Line Name</label>
+                        <input type="text" class="form-control is-valid" id="line" th:field="*{lineName}">
                         <div class="invalid-feedback">Example invalid select route</div>
                     </div>
                     <div class="mb-3">
-                        <label for="capacity" class="form-label">Line</label>
+                        <label for="capacity" class="form-label">Capacity</label>
                         <input type="number" min="1" step="1" class="form-control is-valid" id="capacity" th:field="*{capacity}">
                         <div class="invalid-feedback">Example invalid select route</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cableRoute" class="form-label">Route</label>
+                        <select class="form-select" id="cableRoute" th:field="*{route.id}">
+                            <option th:each="route : ${routes}" th:value="${route.id}" th:text="${route.routeV}">
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cableType" class="form-label">Type</label>
+                        <select class="form-select" id="cableType" th:field="*{type}">
+                            <option th:each="type : ${types}" th:value="${type}" th:text="${type}">
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cableSteering" class="form-label">Steering</label>
+                        <select class="form-select" id="cableSteering" th:field="*{steering}">
+                            <option th:each="str : ${steering}" th:value="${str}" th:text="${str}">
+                        </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>

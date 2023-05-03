@@ -12,8 +12,6 @@ public class StatisticsFilter {
     private LocalDate dateDebut;
     private LocalDate dateFin;
     private String route;
-    private boolean ok;
-    private boolean rework;
     private boolean ll;
     private boolean rl;
     private boolean ov;
@@ -24,6 +22,5 @@ public class StatisticsFilter {
     public StatisticsFilter() {
         this.dateDebut = LocalDate.now();
         this.dateFin = LocalDate.now();
-        this.ll = true;
     }
 }

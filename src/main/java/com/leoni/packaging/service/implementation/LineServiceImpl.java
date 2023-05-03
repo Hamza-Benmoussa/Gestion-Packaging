@@ -3,6 +3,7 @@ package com.leoni.packaging.service.implementation;
 import com.leoni.packaging.dao.LineRepository;
 import com.leoni.packaging.model.Line;
 import com.leoni.packaging.service.LineService;
+import com.leoni.packaging.service.RouteService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -18,10 +20,16 @@ import java.util.NoSuchElementException;
 @Slf4j
 public class LineServiceImpl implements LineService {
     private final LineRepository lineRepository;
+    private final RouteService routeService;
 
     @Override
     public Line findLineById(Long id) {
         return lineRepository.findById(id).orElseThrow(()-> new NoSuchElementException("Line Not Found"));
+    }
+
+    @Override
+    public List<Line> findAll() {
+        return lineRepository.findAll();
     }
 
     @Override

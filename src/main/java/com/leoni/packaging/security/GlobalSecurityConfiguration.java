@@ -60,7 +60,7 @@ public class GlobalSecurityConfiguration {
             if (authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
                 redirectStrategy.sendRedirect(request, response, "/admin/statistics");
             } else if (authorities.contains(new SimpleGrantedAuthority("USER"))) {
-                redirectStrategy.sendRedirect(request, response, "/");
+                redirectStrategy.sendRedirect(request, response, "/user/scan/");
             } else {
                 throw new IllegalStateException("Unexpected user role");
             }

@@ -43,6 +43,9 @@ public class AppUser implements UserDetails {
     @ManyToOne
     @JoinColumn(name="group_id", referencedColumnName="group_id")
     private Group group;
+    @OneToOne
+    @JoinColumn(name = "line_id", referencedColumnName = "line_id")
+    private Line line;
 
     @Column(name = "created_date", nullable = false, updatable = false)
     @CreatedDate

@@ -7,7 +7,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface LineRepository extends JpaRepository<Line, Long> {
-    @Query("from Line l where l.lineV like %:line%")
+    @Query("from Line l where l.lineName like %:line%")
     Page<Line> findByLine(@Param("line") String line, Pageable pageable);
+
 }

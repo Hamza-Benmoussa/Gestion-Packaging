@@ -7,31 +7,43 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import java.util.NoSuchElementException;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 @Slf4j
 public class ObjectiveServiceImpl implements ObjectiveService {
-    private final ObjectiveRepository objectiveRepository;
+    private final ObjectiveRepository ObjectiveRepository;
+
     @Override
-    public Page<Objective> findObjective(String objective, int page, int size) {
-        return null;
+    public Objective findObjectiveById(Long id) {
+        return ObjectiveRepository.findById(id).orElseThrow(()-> new NoSuchElementException("Objective Not Found"));
     }
 
     @Override
-    public Objective addObjective(Objective objective) {
-        return null;
+    public Page<Objective> findObjective(int page, int size) {
+        return ObjectiveRepository.findByObjective(PageRequest.of(page, size));
     }
 
     @Override
-    public Objective updateObjective(Long id, Objective objective) {
-        return null;
+    public Objective addObjective(Objective Objective) {
+        Objective.setId(null);
+        return ObjectiveRepository.save(Objective);
+    }
+
+    @Override
+    public Objective updateObjective(Long id, Objective Objective) {
+        findObjectiveById(id);
+        Objective.setId(id);
+        return ObjectiveRepository.save(Objective);
     }
 
     @Override
     public void deleteObjectiveById(Long id) {
-
+        ObjectiveRepository.deleteById(id);
     }
 }

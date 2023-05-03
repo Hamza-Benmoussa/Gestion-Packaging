@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -22,6 +23,11 @@ public class RouteServiceImpl implements RouteService {
     @Override
     public Route findRouteById(Long id) {
         return routeRepository.findById(id).orElseThrow(()-> new NoSuchElementException("Route Not Found"));
+    }
+
+    @Override
+    public List<Route> findAll() {
+        return routeRepository.findAll();
     }
 
     @Override

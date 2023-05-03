@@ -12,6 +12,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "packages")
@@ -21,7 +22,9 @@ public class Package {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "package_id", insertable = false, updatable = false)
     private Long id;
-    @Column(name = "eticket", length = 100, nullable = false)
+    @Column(name = "package_name", length = 100)
+    private String packageName;
+    @Column(name = "eticket", length = 100)
     private String barCode;
     @Column(name = "quantite_total")
     private int totalQuantity;
@@ -33,15 +36,11 @@ public class Package {
     private LocalDateTime dateFin;
     @Column(name = "status")
     private String state;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "fournisseur_id", referencedColumnName = "fournisseur_id")
     private Supplier supplier;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "route_id", referencedColumnName = "route_id")
-    private Route route;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "line_id", referencedColumnName = "line_id")
-    private Line line;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "aPackage")
+    private List<Cable> cables;
 
 
     @Column(name = "created_date", nullable = false, updatable = false)
@@ -56,4 +55,23 @@ public class Package {
     @Column(name = "modified_by", nullable = false, updatable = false)
     @LastModifiedBy
     private String modifiedBy;
+
+    @Override
+    public String toString() {
+        return "Package{" +
+                "id=" + id +
+                ", packageName='" + packageName + '\'' +
+                ", barCode='" + barCode + '\'' +
+                ", totalQuantity=" + totalQuantity +
+                ", currentQuatity=" + currentQuatity +
+                ", dateDebut=" + dateDebut +
+                ", dateFin=" + dateFin +
+                ", state='" + state + '\'' +
+                ", supplier=" + supplier +
+                ", createdDate=" + createdDate +
+                ", modifiedDate=" + modifiedDate +
+                ", createdBy='" + createdBy + '\'' +
+                ", modifiedBy='" + modifiedBy + '\'' +
+                '}';
+    }
 }

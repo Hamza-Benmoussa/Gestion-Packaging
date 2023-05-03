@@ -11,7 +11,7 @@
 </head>
 <body>
 <main class="container-fluid my-4" layout:fragment="main-content">
-    <div class="card mt-5 w-50 mx-auto">
+    <div class="card mt-5 w-75 mx-auto">
         <div class="card-header d-flex justify-content-between align-items-center">
             <form th:action="@{/admin/lines(search=${search},page=${currentPage},size=${currentSize})}" class="d-flex">
                 <input class="form-control me-2" type="search" id="search" name="search" th:value="${search}" placeholder="Search" aria-label="Search">
@@ -26,12 +26,15 @@
         <div class="card-body">
             <table class="table align-middle">
                 <thead>
-                <tr> <th>LineName</th>  <th>max capacity</th> </tr>
+                <tr> <th>LineName</th>  <th>Capacity</th> <th>Route</th> <th>Type</th> <th>Steering</th> </tr>
                 </thead>
                 <tbody>
                 <tr th:each="ln : ${lines}">
-                    <td th:text="${ln.lineV}"></td>
+                    <td th:text="${ln.lineName}"></td>
                     <td th:text="${ln.capacity}"></td>
+                    <td th:text="${ln.route.routeV}"></td>
+                    <td th:text="${ln.type}"></td>
+                    <td th:text="${ln.steering}"></td>
                     <td style="width: 20px">
                         <a th:href="@{'/admin/lineForm/'+${ln.id}}"
                            class="btn btn-sm btn-warning">update</a>

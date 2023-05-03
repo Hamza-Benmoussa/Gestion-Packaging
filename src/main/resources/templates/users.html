@@ -26,7 +26,7 @@
         <div class="card-body">
             <table class="table align-middle">
                 <thead>
-                <tr> <th>Name</th> <th>Login</th> <th>Role</th> <th>Group</th> <th>Status</th> </tr>
+                <tr> <th>Name</th> <th>Login</th> <th>Role</th> <th>Group</th>  <th>Status</th> </tr>
                 </thead>
                 <tbody>
                 <tr th:each="user : ${users}">
@@ -34,6 +34,7 @@
                     <td th:text="${user.login}"></td>
                     <td th:text="${user.role}"></td>
                     <td th:text="${user.group.name}"></td>
+<!--                    <td th:text="${user.line.lineName}"></td>-->
                     <td th:text="${user.status}"></td>
                     <td style="width: 20px">
                         <a th:href="@{'/admin/userForm/'+${user.id}}"

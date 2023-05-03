@@ -10,84 +10,60 @@
     <link rel="stylesheet" href="../static/fontawesome/css/all.min.css">
 </head>
 <body>
-<main class="container-fluid my-4" layout:fragment="main-content">
-    <div class="container-fluid mt-4">
-        <div class="row">
-            <!-- Filter -->
-            <div class="col-15">
-                <div class="card mt-0">
-                    <div class="card-header bg-dark text-white text-center"><i class="fa-solid fa-filter me-2"></i>Scan
-                    </div>
-                    <div class="card-body">
-
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>ObjectivesAct</th>
-                                <th>QteProduit</th>
-                                <th>Difference</th>
-                                <th>Rework</th>
-                                <th>ObjectivesShift</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>50</td>
-                                <td>0</td>
-                                <td>-50</td>
-                                <td>0</td>
-                                <td>150</td>
-                            </tr>
-                            </tbody>
-                        </table>
-
-                    </div>
-                </div>
-            </div>
-            <!--img-->
-            <div class="text-center">
-                <img src="asset/fstlogo.jpg" class="rounded">
-            </div>
-            <div class="container-fluid mt-4">
-                <div class="row">
-                    <!-- Filter -->
-                    <div class="col-15">
-                        <div class="card mt-2">
-                            <div class="card-header bg-dark text-white text-center"><i
-                                    class="fa-solid fa-filter me-2"></i>Package
-                            </div>
-                            <div class="card-body">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th>Num-Etiquette</th>
-                                        <th>REF Fournisseur</th>
-                                        <th>QteAct</th>
-                                        <th>QteTotal</th>
-                                        <th>dateDebut</th>
-                                        <th>dateFin</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>65226452</td>
-                                        <td>4569856</td>
-                                        <td>11</td>
-                                        <td>20</td>
-                                        <td>10/04/2023 10:53</td>
-                                        <td>10/04/2023 11:47</td>
-                                    </tr>
-
-                                    </tbody>
-                                </table>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<main class="container my-4" layout:fragment="main-content">
+    <div class="text-center mb-2">
+        <img class="w-75" th:src="@{/images/scan_fournisseur.jpg}" rel="scan fournisseur" th:if="${scan.key.getScanKey()=='FOURNISSEUR'}">
+        <img class="w-75" th:src="@{/images/scan_eticket.jpg}" rel="scan eticket" th:if="${scan.key.getScanKey()=='ETICKET'}">
+        <img class="w-75" th:src="@{/images/scan_quantite.jpg}" rel="scan quantite" th:if="${scan.key.getScanKey()=='QUANTITE'}">
+<!--        <img th:src="@{/images/scan_quantite.jpg}" rel="scan quantite" th:if="${scan.key.getScanKey()=='CABLE'}">-->
     </div>
+    <div class="w-75 mx-auto text-center">
+        <form class="pos-style" id="scanReader" name="pos" th:action="@{/user/scan/}" method="post" th:object="${scan}">
+            <div class="form-group" th:if="${scan.key.getScanKey()=='FOURNISSEUR'}">
+                <input type="hidden" th:field="*{key}">
+                <input type="text" id="fournisseur" th:field="*{value}"  class="form-control" placeholder="bar code reader">
+            </div>
+            <div class="form-group" th:if="${scan.key.getScanKey()=='ETICKET'}">
+                <input type="hidden" th:field="*{key}">
+                <input type="text" id="eticket" th:field="*{value}"  class="form-control" placeholder="bar code reader">
+            </div>
+            <div class="form-group" th:if="${scan.key.getScanKey()=='QUANTITE'}">
+                <input type="hidden" th:field="*{key}">
+                <input type="text" id="quantite" th:field="*{value}"  class="form-control" placeholder="bar code reader">
+            </div>
+            <div class="form-group" th:if="${scan.key.getScanKey()=='CABLE'}">
+                <input type="hidden" th:field="*{key}">
+                <label for="cable" class="form-label">CABLE</label>
+                <input type="text" id="cable" th:field="*{value}"  class="form-control" placeholder="bar code reader">
+            </div>
+        </form>
+    </div>
+    <div class="w-75 mx-auto text-center" th:if="${currentPackage}">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>fournisseur</th> <th>eticket</th> <th>quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:object="${currentPackage}">
+                    <td th:text="*{supplier.supplierCode}"></td>
+                    <td th:text="*{barCode}"></td>
+                    <td th:text="|*{currentQuatity}/*{totalQuantity}|"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+
+        window.onload = function(){
+            const firstInput = document.querySelector('#scanReader input:not([type="hidden"])');
+            if (firstInput) {
+                firstInput.focus();
+            }
+        }
+    </script>
 </main>
 </body>
 </html>

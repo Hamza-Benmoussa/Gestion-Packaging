@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "objectives")
 @EntityListeners(AuditingEntityListener.class)
-@Data @NoArgsConstructor @AllArgsConstructor @Builder
+@Data @AllArgsConstructor @Builder
 public class Objective {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "objective_id", insertable = false, updatable = false)
@@ -29,10 +29,10 @@ public class Objective {
     private LocalDateTime startDate;
     @Column(name = "date_limit")
     private LocalDateTime endDate;
+//    @ManyToOne
+//    @JoinColumn(name = "line_id", referencedColumnName = "line_id")
+//    private Line line;
     @ManyToOne
-    @JoinColumn(name = "line_id", referencedColumnName = "line_id")
-    private Line line;
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name= "group_id", referencedColumnName = "group_id")
     private Group group;
 
@@ -49,4 +49,9 @@ public class Objective {
     @Column(name = "modified_by", nullable = false, updatable = false)
     @LastModifiedBy
     private String modifiedBy;
+
+    public Objective() {
+        this.startDate = LocalDateTime.now();
+        this.endDate = LocalDateTime.now().plusDays(1);
+    }
 }

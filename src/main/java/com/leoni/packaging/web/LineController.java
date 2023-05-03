@@ -1,20 +1,25 @@
 package com.leoni.packaging.web;
 
+import com.leoni.packaging.enums.CableType;
+import com.leoni.packaging.enums.Steering;
 import com.leoni.packaging.model.Line;
 import com.leoni.packaging.service.LineService;
+import com.leoni.packaging.service.RouteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 @Controller
 @RequestMapping(path = "/admin")
 @RequiredArgsConstructor
 public class LineController {
-    public final LineService lineService;
+    private final LineService lineService;
+    private final RouteService routeService;
 
     @GetMapping(path = "lines")
     public String lines(Model model,
@@ -35,6 +40,9 @@ public class LineController {
     }
     @GetMapping(path = {"lineForm", "lineForm/","lineForm/{lineId}"})
     public String lineForm(Model model, @PathVariable(name = "lineId",required = false) Optional<Long> lineId){
+        model.addAttribute("routes", routeService.findAll());
+        model.addAttribute("types", Arrays.stream(CableType.values()).toList());
+        model.addAttribute("steering", Arrays.stream(Steering.values()).toList());
         if(lineId.isPresent()){
             Line line = lineService.findLineById(lineId.get());
             model.addAttribute("line", line);

@@ -10,35 +10,35 @@
     <link rel="stylesheet" href="../static/fontawesome/css/all.min.css">
 </head>
 <body>
-<main class="container-fluid my-4" layout:fragment="main-content">
-    <div class="container-fluid mt-4">
-        <div class="row">
-            <!-- Filter -->
-            <div class="col-4">
-                <div class="card mt-2">
-                    <div class="card-header bg-dark text-white text-center"><i class="fa-solid fa-filter me-2"></i>AddRouts
-                    </div>
-                    <div class="card-body">
-
-                        <form class=" was-validated text-center">
-                            <div class="mb-3">
-                                <label for="validationText" class="form-label">ObjectivesAct</label>
-                                <input type="number" class="form-control is-invalid" id="validationText"
-                                       placeholder="Name" required></input>
-
-                            </div>
-                            <div class="mb-3">
-                                <label for="validationText" class="form-label">ObjectivesShift</label>
-                                <input type="number" class="form-control is-invalid" id="validationText"
-                                       placeholder="Name" required></input>
-
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
-
-                    </div>
+<main class="container my-4" layout:fragment="main-content">
+    <div class="card mt-5 w-50 mx-auto">
+        <div class="card-header bg-dark text-white text-center"><i class="fa-solid fa-filter me-2"></i>AddLines</div>
+        <div class="card-body">
+            <form th:action="@{/admin/objective}" th:object="${objective}" method="post" class="text-center">
+                <input type="hidden" class="form-control is-valid" th:if="*{id != null}" th:field="*{id}">
+                <div class="mb-3">
+                    <label for="objective" class="form-label">Line</label>
+                    <input type="number" min="1" step="1" class="form-control is-valid" id="objective" th:field="*{currentObjective}">
+                    <div class="invalid-feedback">Example invalid select route</div>
                 </div>
-            </div>
+                <div class="mb-3">
+                    <label for="startDate" class="form-label">Line</label>
+                    <input type="datetime-local" class="form-control is-valid" id="startDate" th:field="*{startDate}">
+                    <div class="invalid-feedback">Example invalid select route</div>
+                </div>
+                <div class="mb-3">
+                    <label for="endDate" class="form-label">Line</label>
+                    <input type="datetime-local" class="form-control is-valid" id="endDate" th:field="*{endDate}">
+                    <div class="invalid-feedback">Example invalid select route</div>
+                </div>
+                <div class="mb-3">
+                    <label for="userRole" class="form-label">Group</label>
+                    <select class="form-select" id="userRole" th:field="*{group}">
+                        <option th:each="group : ${groups}" th:value="${group.id}" th:text="${group.name}">
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
         </div>
     </div>
 </main>

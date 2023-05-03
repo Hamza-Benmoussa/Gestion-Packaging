@@ -25,7 +25,6 @@ public class Supplier {
     @Column(name = "fournisseur_code",length = 50, unique = true, nullable = false)
     private String supplierCode;
 
-
     @Column(name = "created_date", nullable = false, updatable = false)
     @CreatedDate
     private LocalDateTime createdDate;
@@ -38,4 +37,8 @@ public class Supplier {
     @Column(name = "modified_by", nullable = false, updatable = false)
     @LastModifiedBy
     private String modifiedBy;
+
+    public Supplier(String supplierCode) {
+        this.supplierCode = supplierCode;
+    }
 }

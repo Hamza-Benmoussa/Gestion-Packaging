@@ -4,6 +4,7 @@ import com.leoni.packaging.enums.Role;
 import com.leoni.packaging.model.AppUser;
 import com.leoni.packaging.model.Group;
 import com.leoni.packaging.service.GroupService;
+import com.leoni.packaging.service.LineService;
 import com.leoni.packaging.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -21,6 +22,7 @@ import java.util.Optional;
 public class UserController {
     private final UserService userService;
     private final GroupService groupService;
+    private final LineService lineService;
 
     @GetMapping(path = "users")
     public String users(Model model,
@@ -45,6 +47,7 @@ public class UserController {
         List<Role> roles = Arrays.stream(Role.values()).toList();
         model.addAttribute("groups",groups);
         model.addAttribute("roles",roles);
+        model.addAttribute("lines", lineService.findAll());
         if(userId.isPresent()){
             AppUser user = userService.findUserById(userId.get());
             model.addAttribute("user", user);

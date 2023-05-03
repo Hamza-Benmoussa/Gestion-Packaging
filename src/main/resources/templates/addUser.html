@@ -29,15 +29,21 @@
                 <div class="mb-3">
                     <label for="userRole" class="form-label">Group</label>
                     <select class="form-select" id="userRole" th:field="*{group}">
-                        <option th:each="group : ${groups}" th:value="${group.id}" th:text="${group.name}">
+                        <option th:each="group : ${groups}" th:value="${group.id}" th:text="${group.name}"></option>
                     </select>
                 </div>
                 <div class="mb-3">
                     <label for="userGroup" class="form-label">Role</label>
                     <select class="form-select" id="userGroup" th:field="*{role}">
-                        <option th:each="role : ${roles}" th:value="${role}" th:text="${role}">
+                        <option th:each="role : ${roles}" th:value="${role}" th:text="${role}"></option>
                     </select>
                 </div>
+                <!--<div class="mb-3">
+                    <label for="userLine" class="form-label">Line</label>
+                    <select class="form-select" id="userLine" th:field="*{line}">
+                        <option th:each="line : ${lines}" th:value="${line.id}" th:text="${line}"></option>
+                    </select>
+                </div>-->
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>

@@ -11,14 +11,10 @@
 </head>
 <body>
 <main class="container-fluid my-4" layout:fragment="main-content">
-    <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
+    <div class="card mt-5 w-75 mx-auto">
+        <div class="card-header d-flex justify-content-end align-items-center">
             <div class="list-group" id="add-user-tab" role="tablist">
-                <a class="btn btn-sm btn-primary" id="add-user-btn" th:href="@{/admin/add-objective}" role="tab"
+                <a class="btn btn-sm btn-primary" id="add-user-btn" th:href="@{/admin/objectiveForm}" role="tab"
                    aria-controls="add-user-form">
                     <i class="fa-solid fa-plus"></i> Objectives</a>
             </div>
@@ -26,35 +22,56 @@
         <div class="card-body">
             <table class="table align-middle">
                 <thead>
-                <tr>
-                    <th>ObjectivesAct</th>
-                    <th>QteProduit</th>
-                    <th>Difference</th>
-                    <th>Rework</th>
-                    <th>ObjectivesShift</th>
-
-                </tr>
+                <tr> <th>Objective</th>  <th>qte produite</th> <th>Difference</th>  <th>Group</th> <th>start date</th> <th>end date</th> </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>50</td>
-                    <td>0</td>
-                    <td>-50</td>
-                    <td>0</td>
-                    <td>150</td>
-                    <td style="width: 30px;">
-                        <a class="btn btn-sm btn-warning">update</a>
+                <tr th:each="ob : ${objectives}" th:object="${ob}">
+                    <td th:text="*{currentObjective}"></td>
+                    <td th:text="*{currentQuantity}"></td>
+                    <td th:text="*{currentObjective - currentQuantity}"></td>
+                    <td th:text="*{group.name}"></td>
+                    <td th:text="${#temporals.format(ob.startDate, 'dd-MM-yyyy HH:mm')}"></td>
+                    <td th:text="${#temporals.format(ob.endDate, 'dd-MM-yyyy HH:mm')}"></td>
+                    <td style="width: 20px">
+                        <a th:href="@{'/admin/ObjectiveForm/'+*{id}}"
+                           class="btn btn-sm btn-warning">update</a>
                     </td>
-                    <td style="width: 30px;">
-                        <a class="btn btn-sm btn-danger">delete</a>
+                    <td style="width: 20px">
+                        <form th:action="@{'/admin/deleteObjective/'+*{id}}" method="post">
+                            <button class="btn btn-sm btn-danger">delete</button>
+                        </form>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
+        <div class="card-footer d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination m-0">
+                    <li class="page-item" th:if="${!isFirstPage}">
+                        <a class="page-link" th:href="@{/admin/Objectives(page=${1},size=${currentSize})}">First Page</a>
+                    </li>
+                    <li class="page-item" th:if="${!isFirstPage}">
+                        <a class="page-link" th:href="@{/admin/Objectives(page=${currentPage},size=${currentSize})}"><span aria-hidden="true">&laquo;</span></a>
+                    </li>
+                    <li class="page-item" th:each="v,state : ${totalPagesArr}" th:classappend="${state.index==currentPage}?active:''"
+                        th:if="${state.index==currentPage} or
+                               ${state.index==currentPage+1} or
+                               ${state.index==currentPage -1} or
+                              (${state.first} and ${state.index+2>currentPage}) or
+                              (${state.last} and ${state.index -2<currentPage})">
+                        <a class="page-link" th:href="@{/admin/Objectives(page=${state.count},size=${currentSize})}" th:text="${state.count}"></a>
+                    </li>
+                    <li class="page-item" th:if="${!isLastPage}">
+                        <a class="page-link" th:href="@{/admin/Objectives(page=${currentPage +2},size=${currentSize})}"><span aria-hidden="true">&raquo;</span></a>
+                    </li>
+                    <li class="page-item" th:if="${!isLastPage}">
+                        <a class="page-link" th:href="@{/admin/Objectives(page=${totalPages},size=${currentSize})}">Last Page</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </main>
-
 </body>
-
 </html>
