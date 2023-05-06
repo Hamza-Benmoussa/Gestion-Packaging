@@ -15,7 +15,7 @@
         <img class="w-75" th:src="@{/images/scan_fournisseur.jpg}" rel="scan fournisseur" th:if="${scan.key.getScanKey()=='FOURNISSEUR'}">
         <img class="w-75" th:src="@{/images/scan_eticket.jpg}" rel="scan eticket" th:if="${scan.key.getScanKey()=='ETICKET'}">
         <img class="w-75" th:src="@{/images/scan_quantite.jpg}" rel="scan quantite" th:if="${scan.key.getScanKey()=='QUANTITE'}">
-<!--        <img th:src="@{/images/scan_quantite.jpg}" rel="scan quantite" th:if="${scan.key.getScanKey()=='CABLE'}">-->
+        <img th:src="@{/images/scan_cable.jpg}" rel="scan cable" th:if="${scan.key.getScanKey()=='CABLE'}">
     </div>
     <div class="w-75 mx-auto text-center">
         <form class="pos-style" id="scanReader" name="pos" th:action="@{/user/scan/}" method="post" th:object="${scan}">

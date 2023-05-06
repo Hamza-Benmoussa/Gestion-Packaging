@@ -28,7 +28,22 @@ public class GestionPackageApplication {
 		SpringApplication.run(GestionPackageApplication.class, args);
 	}
 
-	@Bean @Transactional
+	@Bean
+	CommandLineRunner runner (UserService userService){
+		return args ->{
+            try{
+                userService.findUserByUsername("ekko");
+            }catch (Exception e){
+                userService.addUser(AppUser.builder()
+                        .name("anas")
+                        .login("ekko")
+                        .role(Role.ADMIN)
+                        .build());
+            }
+		};
+	}
+
+	//@Bean @Transactional
 	CommandLineRunner runner(RouteService routeService,
 							 LineService lineService,
 							 GroupService groupService,

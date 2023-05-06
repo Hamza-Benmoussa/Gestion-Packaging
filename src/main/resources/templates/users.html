@@ -33,7 +33,7 @@
                     <td th:text="${user.name}"></td>
                     <td th:text="${user.login}"></td>
                     <td th:text="${user.role}"></td>
-                    <td th:text="${user.group.name}"></td>
+                    <td th:text="${user.group!=null? user.group.name:''}"></td>
 <!--                    <td th:text="${user.line.lineName}"></td>-->
                     <td th:text="${user.status}"></td>
                     <td style="width: 20px">

@@ -27,27 +27,42 @@
                     <div class="invalid-feedback">Example invalid select user</div>
                 </div>
                 <div class="mb-3">
-                    <label for="userRole" class="form-label">Group</label>
-                    <select class="form-select" id="userRole" th:field="*{group}">
+                    <label for="userGroup" class="form-label">Group</label>
+                    <select class="form-select" id="userGroup" th:field="*{group}">
                         <option th:each="group : ${groups}" th:value="${group.id}" th:text="${group.name}"></option>
                     </select>
                 </div>
                 <div class="mb-3">
-                    <label for="userGroup" class="form-label">Role</label>
-                    <select class="form-select" id="userGroup" th:field="*{role}">
+                    <label for="userRole" class="form-label">Role</label>
+                    <select class="form-select" id="userRole" th:field="*{role}">
                         <option th:each="role : ${roles}" th:value="${role}" th:text="${role}"></option>
                     </select>
                 </div>
-                <!--<div class="mb-3">
+                <div id="userLineDiv" class="mb-3" style="display: none;">
                     <label for="userLine" class="form-label">Line</label>
                     <select class="form-select" id="userLine" th:field="*{line}">
-                        <option th:each="line : ${lines}" th:value="${line.id}" th:text="${line}"></option>
+                        <option th:each="line : ${lines}" th:value="${line.id}" th:text="${line.lineName}"></option>
                     </select>
-                </div>-->
+                </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
     </div>
+
+    <script>
+        const userGroup = document.getElementById('userRole');
+        const userLineDiv = document.getElementById('userLineDiv');
+        const userLine = document.getElementById('userLine');
+
+        userGroup.addEventListener('change', function() {
+            const selectedOption = userGroup.options[userGroup.selectedIndex].value;
+            if (selectedOption === 'USER') {
+                userLineDiv.style.display = 'block';
+            } else {
+                userLineDiv.style.display = 'none';
+            }
+        });
+    </script>
 </main>
 </body>
 </html>

@@ -32,7 +32,7 @@ public class GlobalSecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/resources/**","/webjars/**","/static/**", "/css/**", "/images/**").permitAll()
                         .requestMatchers("/admin","/admin/**").hasAuthority("ADMIN")
-                        .requestMatchers("/user/**").hasAnyAuthority("USER", "ADMIN")
+                        .requestMatchers("/user/**").hasAnyAuthority("USER")
                         .requestMatchers("/login").permitAll()
                         .anyRequest().authenticated()
                 )

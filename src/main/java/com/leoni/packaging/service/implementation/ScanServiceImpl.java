@@ -75,7 +75,8 @@ public class ScanServiceImpl implements ScanService {
         Package savedPackage = findPackage(aPackage.getId());
         if(aPackage==null) return null;
         cable.setLine(authenticatedUser.getLine());
-        savedPackage.getCables().add(cableRepository.save(cable));
+        cable.setAPackage(savedPackage);
+        cableRepository.save(cable);
         savedPackage.setCurrentQuatity(savedPackage.getCurrentQuatity()+1);
         return savedPackage;
     }

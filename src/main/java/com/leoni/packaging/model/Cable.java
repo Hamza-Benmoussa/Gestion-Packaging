@@ -29,10 +29,10 @@ public class Cable {
     private LocalDateTime completed;
     @Column(name="scan_duration")
     private int duration;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "package_id", referencedColumnName = "package_id")
     private Package aPackage;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "line_id", referencedColumnName = "line_id")
     private Line line;
 
