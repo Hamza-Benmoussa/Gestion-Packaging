@@ -17,6 +17,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -44,8 +46,11 @@ public class ScanServiceImpl implements ScanService {
 
     @Override
     public Supplier getSupplier(String codeFournisseur) {
-        return supplierRepository.findByCode(codeFournisseur)
-                .orElse(supplierRepository.save(new Supplier(codeFournisseur)));
+        Optional<Supplier> supplier = supplierRepository.findByCode(codeFournisseur);
+        if(supplier.isPresent())
+            return supplier.get();
+        else
+            return supplierRepository.save(new Supplier(codeFournisseur));
     }
 
     @Override

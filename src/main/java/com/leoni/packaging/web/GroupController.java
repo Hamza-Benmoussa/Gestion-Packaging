@@ -1,5 +1,7 @@
 package com.leoni.packaging.web;
 
+import com.leoni.packaging.dto.PostGroupDto;
+import com.leoni.packaging.dto.WorkingTime;
 import com.leoni.packaging.model.Group;
 import com.leoni.packaging.service.GroupService;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -41,10 +47,13 @@ public class GroupController {
         }else{
             model.addAttribute("group", new Group());
         }
+        List<String> workingTimes = List.of("6:00 -- 13:59", "14:00 -- 21:59", "22:00 -- 5:59");
+        model.addAttribute("workingTimes", workingTimes);
         return "addGroup";
     }
     @PostMapping(path = "group")
-    public String postGroup(Group group){
+    public String postGroup(PostGroupDto groupDto){
+        Group group = groupDto.getGroup();
         if(group.getId()!=null){
             groupService.updateGroup(group.getId(),group);
         }else{

@@ -1,5 +1,6 @@
 package com.leoni.packaging.model;
 
+import com.leoni.packaging.dto.WorkingTime;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,6 +13,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "groups")
@@ -24,6 +26,9 @@ public class Group {
     private Long id;
     @Column(name = "group_name", length = 100)
     private String name;
+    @Embedded
+    private WorkingTime workingTime;
+
 
     @Column(name = "created_date", nullable = false, updatable = false)
     @CreatedDate

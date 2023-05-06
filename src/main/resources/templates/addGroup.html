@@ -21,6 +21,12 @@
                         <input type="text" class="form-control is-valid" id="group" th:field="*{name}">
                         <div class="invalid-feedback">Example invalid select route</div>
                     </div>
+                    <div class="mb-3">
+                        <label for="workingTime" class="form-label">Group</label>
+                        <select class="form-select" id="workingTime" th:field="*{workingTime}">
+                            <option th:each="time, status : ${workingTimes}" th:value="${status.index}" th:text="${time}"></option>
+                        </select>
+                    </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
