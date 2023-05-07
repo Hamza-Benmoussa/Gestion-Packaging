@@ -36,13 +36,17 @@ public class ScanController {
         else{
             model.addAttribute("scan", new ScanDto(ScanKey.CABLE));
             model.addAttribute("currentPackage",currentPackage);
+            if(currentPackage.getTotalQuantity()<=currentPackage.getCurrentQuatity()){
+                httpSession.setAttribute("currentPackage",null);
+                httpSession.setAttribute("supplier",null);
+                return "redirect:";
+            }
         }
         return "scan";
     }
 
     @PostMapping(path = {"","/"})
     public String postScan(Model model, HttpSession httpSession, ScanDto scan){
-        System.out.println("scan::::::"+ scan);
         Package currentPackage = (Package) httpSession.getAttribute("currentPackage");
         if(scan.getKey()==ScanKey.FOURNISSEUR){
             httpSession.setAttribute("supplier",scanService.getSupplier(scan.getValue()));

@@ -55,14 +55,17 @@ public class ScanServiceImpl implements ScanService {
 
     @Override
     public Package scanEticket(Package aPackage,String eticket) {
-        return packageRepository.findByCode(eticket)
-                .orElse(
-                        packageRepository.save(
-                                Package.builder()
-                                        .barCode(eticket)
-                                        .supplier(supplierRepository.findById(aPackage.getSupplier().getId()).get())
-                                        .build()
-                        )
+        Optional<Package> savedPackage = packageRepository.findByCode(eticket);
+        Optional<Supplier> savedSupplier = supplierRepository.findById(aPackage.getSupplier().getId());
+        if(savedSupplier.isEmpty())
+            throw new RuntimeException("Internal Error");
+        if(savedPackage.isPresent())
+            return savedPackage.get();
+        return packageRepository.save(
+                        Package.builder()
+                                .barCode(eticket)
+                                .supplier(savedSupplier.get())
+                                .build()
                 );
     }
 
