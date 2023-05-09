@@ -38,21 +38,44 @@
             </div>
         </form>
     </div>
-    <div class="w-75 mx-auto text-center" th:if="${currentPackage}">
-        <table class="table">
-            <thead>
+
+    <div class="card w-75 mx-auto text-center" th:if="${currentPackage}">
+        <div class="card-header bg-primary"></div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
                 <tr>
                     <th>fournisseur</th> <th>eticket</th> <th>quantity</th>
                 </tr>
-            </thead>
-            <tbody>
-                <tr th:object="${currentPackage}">
+                </thead>
+                <tbody>
+                <tr th:object="${currentPackage}" th:if="${currentPackage}">
                     <td th:text="*{supplier.supplierCode}"></td>
                     <td th:text="*{barCode}"></td>
                     <td th:text="|*{currentQuatity}/*{totalQuantity}|"></td>
                 </tr>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card w-75 mx-auto text-center" th:if="${currentPackage}">
+        <div class="card-header bg-primary"></div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>fournisseur</th> <th>cable</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="cable : ${currentPackageCables}" th:object="${cable}" th:if="${currentPackageCables}">
+                    <td th:text="*{APackage.barCode}"></td>
+                    <td th:text="*{barCode}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script>

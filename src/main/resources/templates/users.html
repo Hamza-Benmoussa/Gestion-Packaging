@@ -37,6 +37,11 @@
 <!--                    <td th:text="${user.line.lineName}"></td>-->
                     <td th:text="${user.status}"></td>
                     <td style="width: 20px">
+                        <form th:action="@{'/admin/resetPassword/'+${user.id}}" method="post">
+                            <button class="btn btn-sm btn-danger">reset password</button>
+                        </form>
+                    </td>
+                    <td style="width: 20px">
                         <a th:href="@{'/admin/userForm/'+${user.id}}"
                            class="btn btn-sm btn-warning">update</a>
                     </td>

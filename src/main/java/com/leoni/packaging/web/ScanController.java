@@ -5,6 +5,7 @@ import com.leoni.packaging.enums.ScanKey;
 import com.leoni.packaging.model.Cable;
 import com.leoni.packaging.model.Package;
 import com.leoni.packaging.model.Supplier;
+import com.leoni.packaging.service.CableService;
 import com.leoni.packaging.service.ScanService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class ScanController {
     private final ScanService scanService;
+    private final CableService cableService;
 
     @GetMapping(path = {"","/"})
     public String scan(Model model, HttpSession httpSession){
@@ -36,6 +38,7 @@ public class ScanController {
         else{
             model.addAttribute("scan", new ScanDto(ScanKey.CABLE));
             model.addAttribute("currentPackage",currentPackage);
+            model.addAttribute("currentPackageCables", cableService.getLastScanCables(currentPackage));
             if(currentPackage.getTotalQuantity()<=currentPackage.getCurrentQuatity()){
                 httpSession.setAttribute("currentPackage",null);
                 httpSession.setAttribute("supplier",null);

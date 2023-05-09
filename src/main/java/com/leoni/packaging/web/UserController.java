@@ -66,8 +66,14 @@ public class UserController {
         return "redirect:/admin/users";
     }
 
+    @PostMapping(path = "resetPassword/{userId}")
+    public String resetUserPassword(@PathVariable("userId") Long userId){
+        userService.resetPassword(userId);
+        return "redirect:/admin/users";
+    }
+
     @PostMapping(path = "deleteUser/{userId}")
-    public String deleteRoute(@PathVariable("userId") Long userId){
+    public String deleteUser(@PathVariable("userId") Long userId){
         userService.deleteUserById(userId);
         return "redirect:/admin/users";
     }

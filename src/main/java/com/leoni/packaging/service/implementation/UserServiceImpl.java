@@ -59,13 +59,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void changePassword(ChangePasswordForm changePasswordForm) {
-        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        if(username.equals("anonymousUser"))
+            throw new IllegalArgumentException("Internal Error");
         AppUser user = findUserByUsername(username);
-        if(!passwordEncoder.matches(user.getPassword(), changePasswordForm.getOldPassword()))
-            throw new IllegalArgumentException("Incorrect Password");
         if(!changePasswordForm.getNewPassword().equals(changePasswordForm.getRePassword()))
             throw new IllegalArgumentException("Password Not Confirmed");
+        if(!passwordEncoder.matches(changePasswordForm.getOldPassword(), user.getPassword()))
+            throw new IllegalArgumentException("Incorrect Password");
         user.setPassword(passwordEncoder.encode(changePasswordForm.getNewPassword()));
+        user.setStatus(UserStatus.active);
         userRepository.save(user);
     }
 

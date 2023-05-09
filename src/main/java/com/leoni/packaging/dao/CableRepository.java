@@ -31,4 +31,7 @@ public interface CableRepository extends JpaRepository<Cable, Long> {
                                           @Param("startMinute") int StartMinute,
                                           @Param("endHour") int endHour,
                                           @Param("endMinute") int endMinute);
+
+    @Query("from Cable c where c.aPackage.id = :packageId order by c.createdDate desc limit 3")
+    List<Cable> findLastCablesByPackage(Long packageId);
 }

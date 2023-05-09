@@ -3,6 +3,7 @@ package com.leoni.packaging.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -31,7 +32,8 @@ public class GlobalSecurityConfiguration {
                 .authenticationProvider(authenticationProvider())
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/resources/**","/webjars/**","/static/**", "/css/**", "/images/**").permitAll()
-                        .requestMatchers("/admin","/admin/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/change-password").permitAll()
+                        .requestMatchers("/admin/**").hasAuthority("ADMIN")
                         .requestMatchers("/user/**").hasAnyAuthority("USER")
                         .requestMatchers("/login").permitAll()
                         .anyRequest().authenticated()
