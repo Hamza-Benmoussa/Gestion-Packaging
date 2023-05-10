@@ -8,7 +8,6 @@ import com.leoni.packaging.enums.Steering;
 import com.leoni.packaging.model.*;
 import com.leoni.packaging.model.Package;
 import com.leoni.packaging.service.*;
-import jakarta.transaction.Transactional;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -139,7 +138,7 @@ public class GestionPackageApplication {
 					packageRepository.save(aPackage);
 				}
 			});
-			statisticService.findPackages(null).forEach(System.out::println);
+			statisticService.findCablesByRoute(null).forEach(System.out::println);
 		};
 	}
 

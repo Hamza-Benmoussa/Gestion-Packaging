@@ -2,21 +2,26 @@ package com.leoni.packaging.dao;
 
 import com.leoni.packaging.dto.CablesByHourDto;
 import com.leoni.packaging.dto.LineCablesCountDto;
+import com.leoni.packaging.dto.RouteCablesCountDto;
 import com.leoni.packaging.model.Cable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.time.LocalTime;
 import java.util.List;
 
 public interface CableRepository extends JpaRepository<Cable, Long> {
 
-    @Query("select new com.leoni.packaging.dto.LineCablesCountDto(l.lineName, count(*)) "+
-            "from Cable c join Line l on l.id = c.line.id " +
-            "where c.aPackage.id = :packageId " +
+    @Query("select new com.leoni.packaging.dto.LineCablesCountDto(l.lineName,count(*)) " +
+            "from Cable c inner join c.line l inner join l.route r " +
+            "where r.id = :routeId " +
             "group by l.lineName")
-    List<LineCablesCountDto> countByLine(@Param("packageId") Long packageId);
+    List<LineCablesCountDto> countCablesByRoute(@Param("routeId") Long routeId);
+
+    @Query("select new com.leoni.packaging.dto.LineCablesCountDto(l.lineName,count(*)) " +
+            "from Cable c inner join c.line l inner join l.route r " +
+            "where r.id = :routeId")
+    List<Cable> findCablesByRoute(@Param("routeId") Long routeId);
 
     @Query("SELECT new com.leoni.packaging.dto.CablesByHourDto(HOUR(c.createdDate), COUNT(*))" +
             "FROM Cable c " +
@@ -27,7 +32,7 @@ public interface CableRepository extends JpaRepository<Cable, Long> {
             "OR (HOUR(c.createdDate) = :endHour AND MINUTE(c.createdDate) <= :endMinute)) " +
             "GROUP BY HOUR(c.createdDate) " +
             "ORDER BY HOUR(c.createdDate)")
-    List<CablesByHourDto> findCableByHour(@Param("startHour") int startHour,
+    List<CablesByHourDto> findCablesByHour(@Param("startHour") int startHour,
                                           @Param("startMinute") int StartMinute,
                                           @Param("endHour") int endHour,
                                           @Param("endMinute") int endMinute);

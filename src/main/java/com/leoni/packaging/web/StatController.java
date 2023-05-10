@@ -1,6 +1,6 @@
 package com.leoni.packaging.web;
 
-import com.leoni.packaging.dto.PackageLinesCablesCountDto;
+import com.leoni.packaging.dto.RouteCablesCountDto;
 import com.leoni.packaging.dto.StatisticsFilter;
 import com.leoni.packaging.service.StatisticService;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +20,8 @@ public class StatController {
 
     @GetMapping(path = "statistics")
     public String index(Model model, StatisticsFilter filter){
-        List<PackageLinesCablesCountDto> packages = statisticService.findPackages(filter);
-        model.addAttribute("packages", packages);
+        List<RouteCablesCountDto> routes = statisticService.findCablesByRoute(filter);
+        model.addAttribute("routes", routes);
         model.addAttribute("filter", filter);
         return "index";
     }

@@ -21,7 +21,7 @@
                     </div>
                 </div>
             </div>-->
-            <div class="row">
+            <div class="row g-0">
                 <!-- Filter -->
                 <div class="col-4">
                     <div class="card mt-2">
@@ -87,23 +87,24 @@
                     </div>
                 </div>
                 <!-- packages -->
-                <div class="col-8 d-flex justify-content-center flex-wrap">
-                    <div class="card m-2" style="width: 250px;"
-                         th:each="package : ${packages}">
+                <div class="col-8 d-flex justify-content-end flex-wrap">
+                    <div class="card m-2" style="width: 260px"
+                         th:each="route : ${routes}" th:object="${route}">
                         <div class="card-header bg-dark d-flex justify-content-between">
-                            <span class="badge bg-secondary bg-info" data-bs-toggle="modal" data-bs-target="#exampleModal">300</span>
-                            <span class="badge bg-secondary" th:text="${package.APackage.packageName}"></span>
+                            <span class="badge bg-secondary bg-info" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                  th:text="*{totalCables}">300</span>
+                            <span class="badge bg-secondary" th:text="*{route.routeV}"></span>
                         </div>
                         <div class="card-body">
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th scope="col">LineName</th>
-                                    <th scope="col">count</th>
+                                    <th scope="col">Line</th>
+                                    <th scope="col" class="text-center">count</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="line : ${package.lines}">
+                                <tr th:each="line : *{lines}">
                                     <td th:text="${line.lineName}">PIC</td>
                                     <td class="text-center" th:text="${line.cables}">85</td>
                                 </tr>
