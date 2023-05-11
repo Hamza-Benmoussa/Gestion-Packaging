@@ -92,7 +92,7 @@
                          th:each="route : ${routes}" th:object="${route}">
                         <div class="card-header bg-dark d-flex justify-content-between">
                             <span class="badge bg-secondary bg-info" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                  th:text="*{totalCables}">300</span>
+                                  th:text="*{totalCables}" th:onclick="loadCables([[*{route.id}]])">300</span>
                             <span class="badge bg-secondary" th:text="*{route.routeV}"></span>
                         </div>
                         <div class="card-body">
@@ -125,15 +125,63 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <p>Modal body text goes here.</p>
+                        <table class="table" id="routeCables">
+                            <thead>
+                                <tr>
+                                    <th>codeBar</th> <th>lineName</th> <th>started</th> <th>completed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+<!--                        <button type="button" class="btn btn-primary">Save changes</button>-->
                     </div>
                 </div>
             </div>
         </div>
+
+        <script th:inline="javascript">
+            let cables = null;
+            const loadCables = function(routeId){
+                const tableBody = document.querySelector('#routeCables tbody');
+                tableBody.innerHTML = '';
+                fetch(`http://localhost:8080/admin/api/cables/route/${routeId}?size=20`)
+                    .then(response => response.json())
+                    .then(data => {
+
+                        // Define an array of row data objects
+                        const rows = data.content;
+
+                        // Loop through the rows array and add each row to the table
+                        rows.forEach(rowData => {
+                            // Create a new row element
+                            const row = tableBody.insertRow();
+
+                            // Create new cells and add them to the row
+                            const codeBarCell = row.insertCell();
+                            const lineNameCell = row.insertCell();
+                            const startedCell = row.insertCell();
+                            const completedCell = row.insertCell();
+
+                            // Add the data to the cells
+                            codeBarCell.textContent = rowData.barCode;
+                            lineNameCell.textContent = rowData.lineName;
+                            startedCell.textContent = rowData.started;
+                            completedCell.textContent = rowData.completed;
+                        });
+
+                    })
+                    .catch(error => {
+                        // Handle any errors
+                        console.error(error);
+                    });
+
+
+            }
+        </script>
     </main>
 
 </body>
