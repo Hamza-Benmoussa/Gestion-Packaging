@@ -15,12 +15,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Controller
 @RequestMapping(path = "/admin")
 @RequiredArgsConstructor
 public class GroupController {
-    public final GroupService groupService;
+    private final GroupService groupService;
+    private final List<String> workingTimes = List.of("06:00 -- 13:59", "14:00 -- 21:59", "22:00 -- 05:59");
 
     @GetMapping(path = "groups")
     public String groups(Model model,
@@ -29,7 +32,8 @@ public class GroupController {
                         @RequestParam(name="size",required = false, defaultValue = "5") int size){
         page = page > 0 ? --page:0;
         Page<Group> group = groupService.findGroups(search, page, size);
-        model.addAttribute("groups", group.stream().toList());
+        model.addAttribute("groups", group.stream().map(PostGroupDto::fromGroup).collect(Collectors.toList()));
+        model.addAttribute("workingTimes", workingTimes);
         model.addAttribute("search", search);
         model.addAttribute("totalPagesArr",new int[group.getTotalPages()]);
         model.addAttribute("totalPages",group.getTotalPages());
@@ -43,17 +47,16 @@ public class GroupController {
     public String groupForm(Model model, @PathVariable(name = "groupId",required = false) Optional<Long> groupId){
         if(groupId.isPresent()){
             Group group = groupService.findGroupById(groupId.get());
-            model.addAttribute("group", group);
+            model.addAttribute("group", PostGroupDto.fromGroup(group));
         }else{
-            model.addAttribute("group", new Group());
+            model.addAttribute("group", PostGroupDto.fromGroup(new Group()));
         }
-        List<String> workingTimes = List.of("6:00 -- 13:59", "14:00 -- 21:59", "22:00 -- 5:59");
         model.addAttribute("workingTimes", workingTimes);
         return "addGroup";
     }
     @PostMapping(path = "group")
     public String postGroup(PostGroupDto groupDto){
-        Group group = groupDto.getGroup();
+        Group group = groupDto.fromPostGroupDto();
         if(group.getId()!=null){
             groupService.updateGroup(group.getId(),group);
         }else{

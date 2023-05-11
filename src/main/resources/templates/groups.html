@@ -26,11 +26,15 @@
         <div class="card-body">
             <table class="table align-middle">
                 <thead>
-                <tr> <th>groupName</th> </tr>
+                <tr> <th>groupName</th> <th>workingTime</th> </tr>
                 </thead>
                 <tbody>
                 <tr th:each="group : ${groups}">
                     <td th:text="${group.name}"></td>
+                    <td th:each="workingTime, status: ${workingTimes}"
+                        th:if="${status.index == group.workingTime}"
+                        th:text="${workingTime}"
+                    ></td>
                     <td style="width: 20px">
                         <a th:href="@{'/admin/groupForm/'+${group.id}}"
                            class="btn btn-sm btn-warning">update</a>
