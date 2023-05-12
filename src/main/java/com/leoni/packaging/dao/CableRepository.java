@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface CableRepository extends JpaRepository<Cable, Long> {
@@ -16,13 +17,21 @@ public interface CableRepository extends JpaRepository<Cable, Long> {
     @Query("select new com.leoni.packaging.dto.LineCablesCountDto(l.lineName,count(*)) " +
             "from Cable c inner join c.line l inner join l.route r " +
             "where r.id = :routeId " +
+            "and DATE(c.createdDate) >= :dateDebut " +
+            "and DATE(c.createdDate) <= :dateFin " +
             "group by l.lineName")
-    List<LineCablesCountDto> countCablesByRoute(@Param("routeId") Long routeId);
+    List<LineCablesCountDto> countCablesByRoute(@Param("routeId") Long routeId,
+                                                @Param("dateDebut") LocalDate dateDebut,
+                                                @Param("dateFin") LocalDate dateFin);
 
     @Query("select c " +
             "from Cable c inner join c.line l inner join l.route r " +
-            "where r.id = :routeId")
-    Page<Cable> findCablesByRoute(@Param("routeId") Long routeId, Pageable pageable);
+            "where r.id = :routeId " +
+            "and DATE(c.createdDate) >= :dateDebut " +
+            "and DATE(c.createdDate) <= :dateFin ")
+    List<Cable> findCablesByRoute(@Param("routeId") Long routeId,
+                                  @Param("dateDebut") LocalDate dateDebut,
+                                  @Param("dateFin") LocalDate dateFin);
 
     @Query("SELECT new com.leoni.packaging.dto.CablesByHourDto(HOUR(c.createdDate), COUNT(*))" +
             "FROM Cable c " +

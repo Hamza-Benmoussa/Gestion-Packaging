@@ -19,6 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,8 @@ public class StatisticServiceImpl implements StatisticService {
         List<Route> routes = routeService.findAll();
         routes.forEach(route->{
             RouteCablesCountDto routeCablesCount = new RouteCablesCountDto(route, null, 0);
-            List<LineCablesCountDto> lineCablesCount = cableRepository.countCablesByRoute(route.getId());
+            System.out.println("Waaaaaaaaa3::"+ filter);
+            List<LineCablesCountDto> lineCablesCount = cableRepository.countCablesByRoute(route.getId(), filter.getDateDebut(), filter.getDateFin());
             routeCablesCount.setLines(lineCablesCount);
             lineCablesCount.forEach(line->{
                 routeCablesCount.setTotalCables(routeCablesCount.getTotalCables()+line.getCables());
@@ -64,12 +66,10 @@ public class StatisticServiceImpl implements StatisticService {
     }
 
     @Override
-    public PageResponse<CableResponseDto> getCablesByRoute(Long routeId, int page, int size) {
-        Page<Cable> cablesPage = cableRepository.findCablesByRoute(routeId, PageRequest.of(page, size));
-        List<CableResponseDto> cablesPageContent = cablesPage.getContent()
-                .stream()
+    public List<CableResponseDto> getCablesByRoute(Long routeId, LocalDate dateDebut, LocalDate dateFin) {
+        List<Cable> cables = cableRepository.findCablesByRoute(routeId, dateDebut, dateFin);
+        return cables.stream()
                 .map(CableResponseDto::getCableResponseDtoFromCable)
                 .collect(Collectors.toList());
-        return PageResponse.fromPage(cablesPage, cablesPageContent);
     }
 }

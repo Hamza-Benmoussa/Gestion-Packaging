@@ -1,5 +1,6 @@
 package com.leoni.packaging.web;
 
+import com.leoni.packaging.dto.CablesByHourDto;
 import com.leoni.packaging.dto.ScanDto;
 import com.leoni.packaging.enums.ScanKey;
 import com.leoni.packaging.model.Cable;
@@ -7,6 +8,7 @@ import com.leoni.packaging.model.Package;
 import com.leoni.packaging.model.Supplier;
 import com.leoni.packaging.service.CableService;
 import com.leoni.packaging.service.ScanService;
+import com.leoni.packaging.service.StatisticService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user/scan")
@@ -23,9 +26,18 @@ import java.time.LocalDateTime;
 public class ScanController {
     private final ScanService scanService;
     private final CableService cableService;
+    private final StatisticService statisticService;
 
     @GetMapping(path = {"","/"})
     public String scan(Model model, HttpSession httpSession){
+        List<CablesByHourDto> countCablesForEachHour = statisticService.getCountCablesForEachHour();
+        model.addAttribute("cablesCount", countCablesForEachHour);
+        long totalCables=0L;
+        for (CablesByHourDto r: countCablesForEachHour) {
+            totalCables+=r.getCablesCount();
+        }
+        model.addAttribute("totalCables", totalCables);
+
         Package currentPackage = (Package) httpSession.getAttribute("currentPackage");
         Supplier supplier = (Supplier) httpSession.getAttribute("supplier");
         if(supplier==null)

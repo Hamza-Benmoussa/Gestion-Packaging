@@ -5,76 +5,107 @@
 >
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>scan</title>
     <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/fontawesome/css/all.min.css">
 </head>
 <body>
-<main class="container my-4" layout:fragment="main-content">
-    <div class="text-center mb-2">
-        <img class="w-75" th:src="@{/images/scan_fournisseur.jpg}" rel="scan fournisseur" th:if="${scan.key.getScanKey()=='FOURNISSEUR'}">
-        <img class="w-75" th:src="@{/images/scan_eticket.jpg}" rel="scan eticket" th:if="${scan.key.getScanKey()=='ETICKET'}">
-        <img class="w-75" th:src="@{/images/scan_quantite.jpg}" rel="scan quantite" th:if="${scan.key.getScanKey()=='QUANTITE'}">
-        <img th:src="@{/images/scan_cable.jpg}" rel="scan cable" th:if="${scan.key.getScanKey()=='CABLE'}">
-    </div>
-    <div class="w-75 mx-auto text-center">
-        <form class="pos-style" id="scanReader" name="pos" th:action="@{/user/scan/}" method="post" th:object="${scan}">
-            <div class="form-group" th:if="${scan.key.getScanKey()=='FOURNISSEUR'}">
-                <input type="hidden" th:field="*{key}">
-                <input type="text" id="fournisseur" th:field="*{value}"  class="form-control" placeholder="bar code reader">
-            </div>
-            <div class="form-group" th:if="${scan.key.getScanKey()=='ETICKET'}">
-                <input type="hidden" th:field="*{key}">
-                <input type="text" id="eticket" th:field="*{value}"  class="form-control" placeholder="bar code reader">
-            </div>
-            <div class="form-group" th:if="${scan.key.getScanKey()=='QUANTITE'}">
-                <input type="hidden" th:field="*{key}">
-                <input type="text" id="quantite" th:field="*{value}"  class="form-control" placeholder="bar code reader">
-            </div>
-            <div class="form-group" th:if="${scan.key.getScanKey()=='CABLE'}">
-                <input type="hidden" th:field="*{key}">
-                <label for="cable" class="form-label">CABLE</label>
-                <input type="text" id="cable" th:field="*{value}"  class="form-control" placeholder="bar code reader">
-            </div>
-        </form>
-    </div>
+<main class="container-fluid my-4" layout:fragment="main-content">
 
-    <div class="card w-75 mx-auto text-center" th:if="${currentPackage}">
-        <div class="card-header bg-primary"></div>
-        <div class="card-body">
-            <table class="table">
+    <div class="row g-2">
+        <div class="col-6">
+            <table class="table table-dark table-striped">
                 <thead>
                 <tr>
-                    <th>fournisseur</th> <th>eticket</th> <th>quantity</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Quantite</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:object="${currentPackage}" th:if="${currentPackage}">
-                    <td th:text="*{supplier.supplierCode}"></td>
-                    <td th:text="*{barCode}"></td>
-                    <td th:text="|*{currentQuatity}/*{totalQuantity}|"></td>
+                <tr th:each="cablesPerHour : ${cablesCount}" th:object="${cablesPerHour}">
+                    <td th:text="|*{hour} -- *{hour+1}|"></td>
+                    <td th:text="*{cablesCount}"></td>
+                </tr>
+                <tr>
+                    <th scope="row" class="table-active">Total</th>
+                    <td th:text="${totalCables}">21</td>
+
+                </tr>
+                <!-- time and date -->
+                <tr>
+                    <th><h3 id="displayDate"></h3></th>
+                    <th style="width: 50%"><h3 id="displayDateTime"></h3></th>
                 </tr>
                 </tbody>
             </table>
         </div>
-    </div>
+        <div class="col-6">
+            <div class="text-center mb-2">
+                <img class="w-75" th:src="@{/images/scan_fournisseur.jpg}" rel="scan fournisseur" th:if="${scan.key.getScanKey()=='FOURNISSEUR'}">
+                <img class="w-75" th:src="@{/images/scan_eticket.jpg}" rel="scan eticket" th:if="${scan.key.getScanKey()=='ETICKET'}">
+                <img class="w-75" th:src="@{/images/scan_quantite.jpg}" rel="scan quantite" th:if="${scan.key.getScanKey()=='QUANTITE'}">
+                <img th:src="@{/images/scan_cable.jpg}" rel="scan cable" th:if="${scan.key.getScanKey()=='CABLE'}">
+            </div>
+            <div class="mx-auto text-center">
+                <form class="pos-style" id="scanReader" name="pos" th:action="@{/user/scan/}" method="post" th:object="${scan}">
+                    <div class="form-group" th:if="${scan.key.getScanKey()=='FOURNISSEUR'}">
+                        <input type="hidden" th:field="*{key}">
+                        <input type="text" id="fournisseur" th:field="*{value}"  class="form-control" placeholder="bar code reader">
+                    </div>
+                    <div class="form-group" th:if="${scan.key.getScanKey()=='ETICKET'}">
+                        <input type="hidden" th:field="*{key}">
+                        <input type="text" id="eticket" th:field="*{value}"  class="form-control" placeholder="bar code reader">
+                    </div>
+                    <div class="form-group" th:if="${scan.key.getScanKey()=='QUANTITE'}">
+                        <input type="hidden" th:field="*{key}">
+                        <input type="text" id="quantite" th:field="*{value}"  class="form-control" placeholder="bar code reader">
+                    </div>
+                    <div class="form-group" th:if="${scan.key.getScanKey()=='CABLE'}">
+                        <input type="hidden" th:field="*{key}">
+                        <label for="cable" class="form-label">CABLE</label>
+                        <input type="text" id="cable" th:field="*{value}"  class="form-control" placeholder="bar code reader">
+                    </div>
+                </form>
+            </div>
 
-    <div class="card w-75 mx-auto text-center" th:if="${currentPackage}">
-        <div class="card-header bg-primary"></div>
-        <div class="card-body">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>fournisseur</th> <th>cable</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="cable : ${currentPackageCables}" th:object="${cable}" th:if="${currentPackageCables}">
-                    <td th:text="*{APackage.barCode}"></td>
-                    <td th:text="*{barCode}"></td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="card w-75 mx-auto text-center" th:if="${currentPackage}">
+                <div class="card-header bg-primary"></div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>fournisseur</th> <th>eticket</th> <th>quantity</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:object="${currentPackage}" th:if="${currentPackage}">
+                            <td th:text="*{supplier.supplierCode}"></td>
+                            <td th:text="*{barCode}"></td>
+                            <td th:text="|*{currentQuatity}/*{totalQuantity}|"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card w-75 mx-auto text-center" th:if="${currentPackage}">
+                <div class="card-header bg-primary"></div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>fournisseur</th> <th>cable</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="cable : ${currentPackageCables}" th:object="${cable}" th:if="${currentPackageCables}">
+                            <td th:text="*{APackage.supplier.supplierCode}"></td>
+                            <td th:text="*{barCode}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -86,6 +117,30 @@
                 firstInput.focus();
             }
         }
+    </script>
+    <script>
+        function displaytime() {
+            var session = "";
+            var month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            var daylist = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+            var today = new Date();
+            var day = today.getDay();
+            var date = today.getFullYear() + "/" + (today.getMonth() + 1) + "/" + today.getDate();
+            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+            if (today.getHours() >= 12) {
+                session = "PM";
+            } else {
+                session = "AM";
+            }
+
+            document.getElementById("displayDate").innerHTML = daylist[day] + ", " + month[today.getMonth()] + " " + today.getDate();
+            document.getElementById("displayDateTime").innerHTML = date + " " + time + " " + session;
+        }
+
+        setInterval(displaytime, 10);
+
     </script>
 </main>
 </body>

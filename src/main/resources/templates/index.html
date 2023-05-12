@@ -5,7 +5,7 @@
 >
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>productionStatistics</title>
     <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/fontawesome/css/all.min.css">
 </head>
@@ -13,14 +13,13 @@
 
     <main class="container-fluid my-4" layout:fragment="main-content">
         <div>
-            <!--<div class="row mb-2">
+            <div class="row mb-2">
                 <div class="col-12">
                     <div class="text-center bg-info text-white p-2">
                         <h3>Production Statistics</h3>
-                        <p class="m-0">azertyuikhgfdfghnbgfdfgnhbvdsdfbnghaertyuytrez</p>
                     </div>
                 </div>
-            </div>-->
+            </div>
             <div class="row g-0">
                 <!-- Filter -->
                 <div class="col-4">
@@ -32,53 +31,13 @@
 
                                 <div class="mb-3">
                                     <label for="dateDebut" class="form-label bg-info text-white d-block">Date Debut</label>
-                                    <input type="date" class="form-control" id="dateDebut" th:value="*{dateDebut}">
+                                    <input type="date" class="form-control" id="dateDebut" th:field="*{dateDebut}">
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="dateFin" class="form-label bg-info text-white d-block">Date Fin</label>
-                                    <input type="date" class="form-control" id="dateFin" th:value="*{dateFin}">
+                                    <input type="date" class="form-control" id="dateFin" th:field="*{dateFin}">
                                 </div>
-
-                                <div class="mb-3">
-                                    <label for="route" class="form-label bg-info text-white d-block">Route</label>
-                                    <select class="form-select" id="route">
-                                        <option selected>Open this select menu</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                </div>
-
-                                <div class="bg-info text-white mb-2">Steering</div>
-                                <div class="mb-3 form-switch form-check form-check-inline">
-                                    <input type="checkbox" class="form-check-input" id="steeringLL" name="ll" th:checked="*{ll}">
-                                    <label class="form-check-label" for="steeringLL">LL</label>
-                                </div>
-                                <div class="mb-3 form-switch form-check form-check-inline">
-                                    <input type="checkbox" class="form-check-input" id="steeringRL" name="rl" th:checked="*{rl}">
-                                    <label class="form-check-label" for="steeringRL">RL</label>
-                                </div>
-
-                                <div class="bg-info text-white mb-2">Types</div>
-                                <div class="mb-3 form-switch form-check form-check-inline">
-                                    <input type="checkbox" class="form-check-input" id="typeOV" name="ov" th:checked="*{ov}">
-                                    <label class="form-check-label" for="typeOV">OV</label>
-                                </div>
-                                <div class="mb-3 form-switch form-check form-check-inline">
-                                    <input type="checkbox" class="form-check-input" id="typeOV5" name="ov5" th:checked="*{ov5}">
-                                    <label class="form-check-label" for="typeOV5">OV5</label>
-                                </div>
-                                <div class="mb-3 form-switch form-check form-check-inline">
-                                    <input type="checkbox" class="form-check-input" id="typeOV51" name="ov51" th:checked="*{ov51}">
-                                    <label class="form-check-label" for="typeOV51">OV51</label>
-                                </div>
-                                <div class="mb-3 form-switch form-check form-check-inline">
-                                    <input type="checkbox" class="form-check-input" id="typeOV52" name="ov52" th:checked="*{ov52}">
-                                    <label class="form-check-label" for="typeOV52">OV52</label>
-                                </div>
-
-
 
                                 <button type="submit" class="btn btn-primary">Search</button>
                             </form>
@@ -92,7 +51,7 @@
                          th:each="route : ${routes}" th:object="${route}">
                         <div class="card-header bg-dark d-flex justify-content-between">
                             <span class="badge bg-secondary bg-info" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                  th:text="*{totalCables}" th:onclick="loadCables([[*{route.id}]])">300</span>
+                                  th:text="*{totalCables}" th:onclick="loadCables([[*{route.id}]],[[${filter.dateDebut}]], [[${filter.dateFin}]])">300</span>
                             <span class="badge bg-secondary" th:text="*{route.routeV}"></span>
                         </div>
                         <div class="card-body">
@@ -105,8 +64,8 @@
                                 </thead>
                                 <tbody>
                                 <tr th:each="line : *{lines}">
-                                    <td th:text="${line.lineName}">PIC</td>
-                                    <td class="text-center" th:text="${line.cables}">85</td>
+                                    <td th:text="${line.lineName}"></td>
+                                    <td class="text-center" th:text="${line.cables}"></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -121,7 +80,7 @@
             <div class="modal-dialog modal-xl">
                 <div class="modal-content rounded-0">
                     <div class="modal-header">
-                        <h5 class="modal-title">Modal title</h5>
+                        <button class="btn btn-sm btn-success" onclick="exportTableToExcel()" id="downloadExelBtn">Excel</button>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -143,20 +102,35 @@
             </div>
         </div>
 
+        <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+        <script src="https://unpkg.com/file-saver@2.0.5/dist/FileSaver.min.js"></script>
         <script th:inline="javascript">
             let cables = null;
-            const loadCables = function(routeId){
+            let routeName = "";
+            let GlobalDateDebut = "";
+            let GlobalDateFin = "";
+            const loadCables = function(routeId,dateDebut,dateFin){
                 const tableBody = document.querySelector('#routeCables tbody');
                 tableBody.innerHTML = '';
-                fetch(`http://localhost:8080/admin/api/cables/route/${routeId}?size=20`)
+                fetch(`http://localhost:8080/admin/api/cables/route/${routeId}?dateDebut=${dateDebut}&dateFin=${dateFin}`)
                     .then(response => response.json())
                     .then(data => {
-
-                        // Define an array of row data objects
-                        const rows = data.content;
+                        const exelBtn = document.getElementById("downloadExelBtn");
+                        console.log(data.length)
+                        if(data.length==0){
+                            routeName = "";
+                            GlobalDateDebut = "";
+                            GlobalDateFin = "";
+                            exelBtn.disabled = true;
+                        }else{
+                            routeName = "_"+data[0].routeName;
+                            GlobalDateDebut = "_"+dateDebut;
+                            GlobalDateFin = "_"+dateFin;
+                            exelBtn.disabled = false;
+                        }
 
                         // Loop through the rows array and add each row to the table
-                        rows.forEach(rowData => {
+                        data.forEach(rowData => {
                             // Create a new row element
                             const row = tableBody.insertRow();
 
@@ -181,6 +155,31 @@
 
 
             }
+
+            function exportTableToExcel() {
+                var table = document.getElementById("routeCables");
+                var headers = Array.from(table.querySelectorAll("th")).map(th => th.innerText);
+                var data = Array.from(table.querySelectorAll("tbody tr")).map(row =>
+                    Array.from(row.querySelectorAll("td")).map(td => td.innerText)
+                );
+
+                var worksheet = XLSX.utils.aoa_to_sheet([headers, ...data]);
+                var workbook = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+                var wbout = XLSX.write(workbook, { bookType: 'xlsx', type: 'binary' });
+
+                function s2ab(s) {
+                    var buf = new ArrayBuffer(s.length);
+                    var view = new Uint8Array(buf);
+                    for (var i = 0; i < s.length; i++) {
+                        view[i] = s.charCodeAt(i) & 0xFF;
+                    }
+                    return buf;
+                }
+
+                saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), `cables${routeName}${GlobalDateDebut}${GlobalDateFin}.xlsx`);
+            }
+
         </script>
     </main>
 

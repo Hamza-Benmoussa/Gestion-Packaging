@@ -11,13 +11,6 @@ import java.time.LocalDate;
 public class StatisticsFilter {
     private LocalDate dateDebut;
     private LocalDate dateFin;
-    private String route;
-    private boolean ll;
-    private boolean rl;
-    private boolean ov;
-    private boolean ov5;
-    private boolean ov51;
-    private boolean ov52;
 
     public StatisticsFilter() {
         this.dateDebut = LocalDate.now();
