@@ -49,7 +49,7 @@ public class GroupController {
             Group group = groupService.findGroupById(groupId.get());
             model.addAttribute("group", PostGroupDto.fromGroup(group));
         }else{
-            model.addAttribute("group", PostGroupDto.fromGroup(new Group()));
+            model.addAttribute("group", new PostGroupDto());
         }
         model.addAttribute("workingTimes", workingTimes);
         return "addGroup";
