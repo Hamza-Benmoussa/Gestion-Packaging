@@ -9,7 +9,7 @@
 </head>
 <body>
 <main class="container-fluid my-4" layout:fragment="main-content">
-    <div class="card mt-5 w-75 mx-auto">
+    <div class="card mt-5 mx-auto">
         <div class="card-header d-flex justify-content-between align-items-center">
             <form th:action="@{/admin/users(search=${search},page=${currentPage},size=${currentSize})}" class="d-flex">
                 <input class="form-control me-2" type="search" id="search" name="search" th:value="${search}" placeholder="Search" aria-label="Search">
@@ -24,7 +24,7 @@
         <div class="card-body">
             <table class="table align-middle">
                 <thead>
-                <tr> <th>Name</th> <th>Login</th> <th>Role</th> <th>Group</th>  <th>Status</th> </tr>
+                <tr> <th>Name</th> <th>Login</th> <th>Role</th> <th>Group</th>  <th>Status</th> <th>line</th>  </tr>
                 </thead>
                 <tbody>
                 <tr th:each="user : ${users}">
@@ -32,18 +32,18 @@
                     <td th:text="${user.login}"></td>
                     <td th:text="${user.role}"></td>
                     <td th:text="${user.group!=null? user.group.name:''}"></td>
-<!--                    <td th:text="${user.line.lineName}"></td>-->
                     <td th:text="${user.status}"></td>
-                    <td style="width: 20px">
+                    <td th:text="${user.line!=null? user.line.lineName:''}"></td>
+                    <td class="text-center" style="width: 10%">
                         <form th:action="@{'/admin/resetPassword/'+${user.id}}" method="post">
                             <button class="btn btn-sm btn-danger">reset password</button>
                         </form>
                     </td>
-                    <td style="width: 20px">
+                    <td class="text-center" style="width: 5%">
                         <a th:href="@{'/admin/userForm/'+${user.id}}"
                            class="btn btn-sm btn-warning">update</a>
                     </td>
-                    <td style="width: 20px">
+                    <td class="text-center" style="width: 5%">
                         <form th:action="@{'/admin/deleteUser/'+${user.id}}" method="post">
                             <button class="btn btn-sm btn-danger">delete</button>
                         </form>
