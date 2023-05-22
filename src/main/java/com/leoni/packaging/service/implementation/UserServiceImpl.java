@@ -2,6 +2,7 @@ package com.leoni.packaging.service.implementation;
 
 import com.leoni.packaging.dao.UserRepository;
 import com.leoni.packaging.dto.ChangePasswordForm;
+import com.leoni.packaging.enums.Role;
 import com.leoni.packaging.enums.UserStatus;
 import com.leoni.packaging.model.AppUser;
 import com.leoni.packaging.service.UserService;
@@ -42,6 +43,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public AppUser addUser(AppUser user) {
+        if(user.getRole().equals(Role.ADMIN)){
+            user.setGroup(null);
+            user.setLine(null);
+        }
         user.setPassword(passwordEncoder.encode(user.getLogin()));
         user.setStatus(UserStatus.initial);
         return userRepository.save(user);

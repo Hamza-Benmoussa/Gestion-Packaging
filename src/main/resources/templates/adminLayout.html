@@ -18,5 +18,21 @@
 <main layout:fragment="main-content"></main>
 
 <script th:src="@{/webjars/bootstrap/5.1.3/js/bootstrap.bundle.js}"></script>
+<script>
+    const buttons = document.querySelectorAll('table tbody button');
+    const anchors = document.querySelectorAll('table tbody a');
+    function showConfirmation(event) {
+        const result = confirm('Are you sure you want to proceed?');
+        if (!result) {
+            event.preventDefault();
+        }
+    }
+    buttons.forEach(button => {
+        button.addEventListener('click', showConfirmation);
+    });
+    anchors.forEach(button => {
+        button.addEventListener('click', showConfirmation);
+    });
+</script>
 </body>
 </html>

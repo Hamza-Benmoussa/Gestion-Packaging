@@ -20,11 +20,11 @@ public class GestionPackageApplication {
 	CommandLineRunner runner (UserService userService){
 		return args ->{
             try{
-                userService.findUserByUsername("ekko");
+                userService.findUserByUsername("root");
             }catch (Exception e){
                 userService.addUser(AppUser.builder()
-                        .name("anas")
-                        .login("ekko")
+                        .name("root")
+                        .login("root")
                         .role(Role.ADMIN)
                         .build());
             }
