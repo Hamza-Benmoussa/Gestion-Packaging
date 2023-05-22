@@ -6,8 +6,6 @@
 <head>
     <meta charset="UTF-8">
     <title>productionStatistics</title>
-    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../static/fontawesome/css/all.min.css">
 </head>
 <body>
 
@@ -51,7 +49,9 @@
                          th:each="route : ${routes}" th:object="${route}">
                         <div class="card-header bg-dark d-flex justify-content-between">
                             <span class="badge bg-secondary bg-info" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                  th:text="*{totalCables}" th:onclick="loadCables([[*{route.id}]],[[${filter.dateDebut}]], [[${filter.dateFin}]])">300</span>
+                                  style="cursor: pointer;"
+                                  th:text="*{totalCables}"
+                                  th:onclick="loadCables([[*{route.id}]],[[${filter.dateDebut}]], [[${filter.dateFin}]])">300</span>
                             <span class="badge bg-secondary" th:text="*{route.routeV}"></span>
                         </div>
                         <div class="card-body">
@@ -87,7 +87,7 @@
                         <table class="table" id="routeCables">
                             <thead>
                                 <tr>
-                                    <th>codeBar</th> <th>lineName</th> <th>started</th> <th>completed</th>
+                                    <th>codeBar</th> <th>lineName</th> <th>started</th> <th>completed</th> <th>Duration</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -116,7 +116,6 @@
                     .then(response => response.json())
                     .then(data => {
                         const exelBtn = document.getElementById("downloadExelBtn");
-                        console.log(data.length)
                         if(data.length==0){
                             routeName = "";
                             GlobalDateDebut = "";
@@ -131,6 +130,7 @@
 
                         // Loop through the rows array and add each row to the table
                         data.forEach(rowData => {
+                            console.log(rowData)
                             // Create a new row element
                             const row = tableBody.insertRow();
 
@@ -139,12 +139,17 @@
                             const lineNameCell = row.insertCell();
                             const startedCell = row.insertCell();
                             const completedCell = row.insertCell();
+                            const durationCell = row.insertCell();
 
                             // Add the data to the cells
+                            let startDate = new Date(rowData.started);
+                            let endDate = new Date(rowData.completed);
+
                             codeBarCell.textContent = rowData.barCode;
                             lineNameCell.textContent = rowData.lineName;
-                            startedCell.textContent = rowData.started;
-                            completedCell.textContent = rowData.completed;
+                            startedCell.textContent = startDate.toLocaleDateString('en-US')+" "+startDate.toLocaleTimeString('en-US');
+                            completedCell.textContent =  endDate.toLocaleDateString('en-US')+" "+endDate.toLocaleTimeString('en-US');
+                            durationCell.textContent = rowData.duration;
                         });
 
                     })

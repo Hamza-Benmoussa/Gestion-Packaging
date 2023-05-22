@@ -6,8 +6,6 @@
 <head>
     <meta charset="UTF-8">
     <title>addLine</title>
-    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../static/fontawesome/css/all.min.css">
 </head>
 <body>
     <main class="container my-4" layout:fragment="main-content">
@@ -30,18 +28,6 @@
                         <label for="cableRoute" class="form-label">Route</label>
                         <select class="form-select" id="cableRoute" th:field="*{route.id}">
                             <option th:each="route : ${routes}" th:value="${route.id}" th:text="${route.routeV}">
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="cableType" class="form-label">Type</label>
-                        <select class="form-select" id="cableType" th:field="*{type}">
-                            <option th:each="type : ${types}" th:value="${type}" th:text="${type}">
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="cableSteering" class="form-label">Steering</label>
-                        <select class="form-select" id="cableSteering" th:field="*{steering}">
-                            <option th:each="str : ${steering}" th:value="${str}" th:text="${str}">
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>

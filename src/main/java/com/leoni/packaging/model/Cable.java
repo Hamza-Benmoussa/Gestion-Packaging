@@ -28,7 +28,7 @@ public class Cable {
     @Column(name="scan_completed")
     private LocalDateTime completed;
     @Column(name="scan_duration")
-    private int duration;
+    private long duration;
     @ManyToOne
     @JoinColumn(name = "package_id", referencedColumnName = "package_id")
     private Package aPackage;

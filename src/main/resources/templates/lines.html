@@ -6,8 +6,6 @@
 <head>
     <meta charset="UTF-8">
     <title>line</title>
-    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../static/fontawesome/css/all.min.css">
 </head>
 <body>
 <main class="container-fluid my-4" layout:fragment="main-content">
@@ -26,15 +24,13 @@
         <div class="card-body">
             <table class="table align-middle">
                 <thead>
-                <tr> <th>LineName</th>  <th>Capacity</th> <th>Route</th> <th>Type</th> <th>Steering</th> </tr>
+                <tr> <th>LineName</th>  <th>Capacity</th> <th>Route</th></tr>
                 </thead>
                 <tbody>
                 <tr th:each="ln : ${lines}">
                     <td th:text="${ln.lineName}"></td>
                     <td th:text="${ln.capacity}"></td>
                     <td th:text="${ln.route.routeV}"></td>
-                    <td th:text="${ln.type}"></td>
-                    <td th:text="${ln.steering}"></td>
                     <td style="width: 20px">
                         <a th:href="@{'/admin/lineForm/'+${ln.id}}"
                            class="btn btn-sm btn-warning">update</a>

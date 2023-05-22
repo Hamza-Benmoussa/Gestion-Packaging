@@ -6,8 +6,6 @@
 <head>
     <meta charset="UTF-8">
     <title>scan</title>
-    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../static/fontawesome/css/all.min.css">
 </head>
 <body>
 <main class="container my-4" layout:fragment="main-content">
@@ -78,6 +76,7 @@
                     </div>
                     <div class="form-group" th:if="${scan.key.getScanKey()=='CABLE'}">
                         <input type="hidden" th:field="*{key}">
+                        <input type="hidden" id="combinedDateTimeInput" th:field="*{scanDateTime}">
                         <input type="text" id="cable" th:field="*{value}"  class="form-control" placeholder="bar code reader">
                     </div>
                 </form>
@@ -102,12 +101,20 @@
     </div>
 
     <script>
-
         window.onload = function(){
             const firstInput = document.querySelector('#scanReader input:not([type="hidden"])');
             if (firstInput) {
                 firstInput.focus();
             }
+            updateDateTime()
+            // setInterval(updateDateTime, 1000);
+        }
+        function updateDateTime() {
+            let currentDate = new Date().toISOString().slice(0, 10);
+            let currentTime = new Date().toISOString().slice(11, 19);
+            let combinedDateTime = currentDate + "T" + currentTime;
+
+            document.getElementById("combinedDateTimeInput").value = combinedDateTime;
         }
     </script>
     <script>

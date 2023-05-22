@@ -12,7 +12,7 @@ public class CableResponseDto {
     private String barCode;
     private LocalDateTime started;
     private LocalDateTime completed;
-    private int duration;
+    private long duration;
     private String lineName;
     private String routeName;
 

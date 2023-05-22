@@ -1,7 +1,5 @@
 package com.leoni.packaging.model;
 
-import com.leoni.packaging.enums.Steering;
-import com.leoni.packaging.enums.CableType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,12 +26,6 @@ public class Line {
     private String lineName;
     @Column(name = "capacity", nullable = false)
     private int capacity;
-    @Column(name="cable_type", length = 20, nullable = false)
-    @Enumerated(EnumType.STRING)
-    private CableType type;
-    @Column(name="steering", length = 20, nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Steering steering;
     @ManyToOne
     @JoinColumn(name = "route_id", referencedColumnName = "route_id", nullable = false)
     private Route route;

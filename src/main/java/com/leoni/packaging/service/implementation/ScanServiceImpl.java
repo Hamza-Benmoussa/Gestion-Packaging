@@ -17,6 +17,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
 @Service
@@ -84,6 +87,8 @@ public class ScanServiceImpl implements ScanService {
         if(aPackage==null) return null;
         cable.setLine(authenticatedUser.getLine());
         cable.setAPackage(savedPackage);
+        cable.setCompleted(LocalDateTime.now());
+        cable.setDuration(Duration.between(cable.getStarted(), cable.getCompleted()).getSeconds()%60);
         cableRepository.save(cable);
         savedPackage.setCurrentQuatity(savedPackage.getCurrentQuatity()+1);
         return savedPackage;

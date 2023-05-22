@@ -6,8 +6,6 @@
 <head>
     <meta charset="UTF-8">
     <title>addUser</title>
-    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../static/fontawesome/css/all.min.css">
 </head>
 <body>
 <main class="container my-4" layout:fragment="main-content">
@@ -27,15 +25,15 @@
                     <div class="invalid-feedback">Example invalid select user</div>
                 </div>
                 <div class="mb-3">
-                    <label for="userGroup" class="form-label">Group</label>
-                    <select class="form-select" id="userGroup" th:field="*{group}">
-                        <option th:each="group : ${groups}" th:value="${group.id}" th:text="${group.name}"></option>
-                    </select>
-                </div>
-                <div class="mb-3">
                     <label for="userRole" class="form-label">Role</label>
                     <select class="form-select" id="userRole" th:field="*{role}">
                         <option th:each="role : ${roles}" th:value="${role}" th:text="${role}"></option>
+                    </select>
+                </div>
+                <div id="userGroupDiv" class="mb-3" style="display: none;">
+                    <label for="userGroup" class="form-label">Group</label>
+                    <select class="form-select" id="userGroup" th:field="*{group}">
+                        <option th:each="group : ${groups}" th:value="${group.id}" th:text="${group.name}"></option>
                     </select>
                 </div>
                 <div id="userLineDiv" class="mb-3" style="display: none;">
@@ -52,14 +50,16 @@
     <script>
         const userGroup = document.getElementById('userRole');
         const userLineDiv = document.getElementById('userLineDiv');
-        const userLine = document.getElementById('userLine');
+        const userGroupDiv = document.getElementById('userGroupDiv');
 
         userGroup.addEventListener('change', function() {
             const selectedOption = userGroup.options[userGroup.selectedIndex].value;
             if (selectedOption === 'USER') {
                 userLineDiv.style.display = 'block';
+                userGroupDiv.style.display = 'block'
             } else {
                 userLineDiv.style.display = 'none';
+                userGroupDiv.style.display = 'none'
             }
         });
     </script>

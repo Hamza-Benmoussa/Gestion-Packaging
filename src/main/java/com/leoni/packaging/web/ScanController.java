@@ -74,7 +74,7 @@ public class ScanController {
         } else if(scan.getKey()==ScanKey.CABLE){
             Cable cable = Cable.builder()
                     .barCode(scan.getValue())
-                    .started(LocalDateTime.now())
+                    .started(scan.getScanDateTime())
                     .build();
             Package p = scanService.scanCable(currentPackage, cable);
             httpSession.setAttribute("currentPackage", p);
